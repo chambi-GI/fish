@@ -1,0 +1,126 @@
+<div class="container py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Seller Profile</h4>
+        </div>
+        <div class="card-body">
+          <!-- Loading Spinner -->
+          <div class="text-center" *ngIf="loading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <!-- Profile Form -->
+          <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" *ngIf="!loading">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" formControlName="name">
+                <div class="text-danger" *ngIf="profileForm.get('name')?.touched && profileForm.get('name')?.errors?.['required']">
+                  Name is required
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" formControlName="email">
+                <div class="text-danger" *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.errors?.['required']">
+                  Email is required
+                </div>
+                <div class="text-danger" *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.errors?.['email']">
+                  Please enter a valid email
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Phone</label>
+                <input type="tel" class="form-control" formControlName="phone">
+                <div class="text-danger" *ngIf="profileForm.get('phone')?.touched && profileForm.get('phone')?.errors?.['required']">
+                  Phone number is required
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Address</label>
+                <textarea class="form-control" formControlName="address" rows="3"></textarea>
+                <div class="text-danger" *ngIf="profileForm.get('address')?.touched && profileForm.get('address')?.errors?.['required']">
+                  Address is required
+                </div>
+              </div>
+            </div>
+
+            <div class="text-end">
+              <button type="submit" class="btn btn-primary" [disabled]="!profileForm.valid || submitting">
+                <span class="spinner-border spinner-border-sm me-2" *ngIf="submitting"></span>
+                Update Profile
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- License Section -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h4 class="card-title">Business License</h4>
+        </div>
+        <div class="card-body">
+          <!-- Current License -->
+          <div class="mb-4" *ngIf="seller?.license">
+            <h6>Current License</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <p><strong>License Number:</strong> {{ seller.license.number }}</p>
+                <p><strong>Expiry Date:</strong> {{ seller.license.expiryDate | date }}</p>
+              </div>
+              <div class="col-md-6">
+                <a [href]="seller.license.document" target="_blank" class="btn btn-primary">
+                  View License Document
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- License Form -->
+          <form [formGroup]="licenseForm" (ngSubmit)="submitLicense()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">License Number</label>
+                <input type="text" class="form-control" formControlName="number">
+                <div class="text-danger" *ngIf="licenseForm.get('number')?.touched && licenseForm.get('number')?.errors?.['required']">
+                  License number is required
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Expiry Date</label>
+                <input type="date" class="form-control" formControlName="expiryDate">
+                <div class="text-danger" *ngIf="licenseForm.get('expiryDate')?.touched && licenseForm.get('expiryDate')?.errors?.['required']">
+                  Expiry date is required
+                </div>
+              </div>
+
+              <div class="col-12 mb-3">
+                <label class="form-label">License Document</label>
+                <input type="file" class="form-control" (change)="onFileSelected($event)" accept=".pdf,.jpg,.jpeg,.png">
+                <div class="text-danger" *ngIf="licenseForm.get('document')?.touched && licenseForm.get('document')?.errors?.['required']">
+                  License document is required
+                </div>
+              </div>
+            </div>
+
+            <div class="text-end">
+              <button type="submit" class="btn btn-primary" [disabled]="!licenseForm.valid || submitting">
+                <span class="spinner-border spinner-border-sm me-2" *ngIf="submitting"></span>
+                Submit License
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

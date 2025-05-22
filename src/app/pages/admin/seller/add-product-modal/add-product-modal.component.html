@@ -1,0 +1,107 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <form [formGroup]="productForm" (ngSubmit)="submit()" class="product-form">
+      <div class="modal-header">
+        <div class="icon-circle bg-success mb-2"><i class="ci-check text-white"></i></div>
+        <h2 class="mb-0">Add new product</h2>
+        <button class="close-button" type="button" (click)="closeModal()">
+          <i class="ci ci-close"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <h5 class="mb-3">Product images</h5>
+        <div class="product-images-grid">
+          <div class="main-image-upload">
+            <label class="image-upload-label" [class.drag-over]="dragOverIndex === 0"
+              (dragover)="onDragOver($event, 0)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event, 0)">
+              <input type="file" (change)="onImageUpload($event, 0)" hidden>
+              <div class="image-upload-box">
+                <ng-container *ngIf="imageUrls.controls[0].value; else uploadIcon">
+                  <img [src]="imageUrls.controls[0].value" alt="Main" />
+                  <button type="button" class="btn btn-danger btn-sm mt-2" (click)="removeImageUrl(0)"><i class="ci ci-trash"></i></button>
+                </ng-container>
+                <ng-template #uploadIcon>
+                  <div class="upload-placeholder">
+                    <i class="ci-upload"></i>
+                    <span>Click or drag and drop<br>SVG, PNG, JPG or GIF (max. 800×400px)</span>
+                  </div>
+                </ng-template>
+                <div *ngIf="imageErrors[0]" class="text-danger small mt-1">{{ imageErrors[0] }}</div>
+                <div *ngIf="imageProgress[0]" class="progress mt-1"><div class="progress-bar" [style.width]="imageProgress[0] + '%'">{{ imageProgress[0] }}%</div></div>
+              </div>
+            </label>
+          </div>
+          <div class="side-images">
+            <ng-container *ngFor="let ctrl of imageUrls.controls.slice(1,5); let i = index">
+              <label class="image-upload-label small" [class.drag-over]="dragOverIndex === i+1"
+                (dragover)="onDragOver($event, i+1)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event, i+1)">
+                <input type="file" (change)="onImageUpload($event, i+1)" hidden>
+                <div class="image-upload-box small">
+                  <ng-container *ngIf="ctrl.value; else uploadIconSmall">
+                    <img [src]="ctrl.value" alt="Side" />
+                    <button type="button" class="btn btn-danger btn-sm mt-2" (click)="removeImageUrl(i+1)"><i class="ci ci-trash"></i></button>
+                    <button type="button" class="btn btn-light btn-sm mt-2 ms-1" (click)="moveImageUrl(i+1, i)"><i class="ci ci-arrow-left"></i></button>
+                    <button type="button" class="btn btn-light btn-sm mt-2 ms-1" (click)="moveImageUrl(i+1, i+2)" *ngIf="i+2 < 5"><i class="ci ci-arrow-right"></i></button>
+                  </ng-container>
+                  <ng-template #uploadIconSmall>
+                    <div class="upload-placeholder small">
+                      <i class="ci-upload"></i>
+                      <span>Click or drag and drop<br>SVG, PNG, JPG or GIF (max. 800×400px)</span>
+                    </div>
+                  </ng-template>
+                  <div *ngIf="imageErrors[i+1]" class="text-danger small mt-1">{{ imageErrors[i+1] }}</div>
+                  <div *ngIf="imageProgress[i+1]" class="progress mt-1"><div class="progress-bar" [style.width]="imageProgress[i+1] + '%'">{{ imageProgress[i+1] }}%</div></div>
+                </div>
+              </label>
+            </ng-container>
+          </div>
+        </div>
+
+        <hr>
+
+        <h5 class="mb-3">Basic information</h5>
+        <div class="form-group">
+          <label>Product name</label>
+          <input class="form-control" formControlName="name" placeholder="Product name" required />
+        </div>
+        <div class="form-group">
+          <label>Description (Optional)</label>
+          <textarea class="form-control" formControlName="description" placeholder="Description (Optional)"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Unit Price (TZS) *</label>
+          <input class="form-control" type="number" formControlName="unitPrice" placeholder="Enter price per unit" required />
+        </div>
+        <div class="form-group">
+          <label>Available Quantity *</label>
+          <input class="form-control" type="number" formControlName="availableQuantity" placeholder="Enter available quantity" required />
+        </div>
+        <div class="form-group">
+          <label>Category *</label>
+          <select class="form-control" formControlName="categoryId" required>
+            <option value="">Select a category</option>
+            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Storage Type *</label>
+          <select class="form-control" formControlName="storageType" required>
+            <option value="">Select storage type</option>
+            <option *ngFor="let type of storageTypes" [value]="type.id">{{ type.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Alert Quantity</label>
+          <input class="form-control" type="number" formControlName="alertQuantity" placeholder="Enter alert quantity" />
+          <small class="text-muted">Get notified when stock reaches this level</small>
+        </div>
+      </div>
+
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading || productForm.invalid">Confirm</button>
+      </div>
+    </form>
+  </div>
+</div>

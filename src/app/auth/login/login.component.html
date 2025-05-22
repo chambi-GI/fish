@@ -1,0 +1,46 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Welcome Back</h2>
+      <p>Please enter your phone number to continue</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <div class="input-group">
+          <span class="input-prefix">+255</span>
+          <input
+            type="tel"
+            id="phoneNumber"
+            formControlName="phoneNumber"
+            placeholder="Enter your phone number"
+            [ngClass]="{'is-invalid': loginForm.get('phoneNumber')?.invalid && loginForm.get('phoneNumber')?.touched}"
+          />
+        </div>
+        <div class="error-message" *ngIf="loginForm.get('phoneNumber')?.invalid && loginForm.get('phoneNumber')?.touched">
+          <span *ngIf="loginForm.get('phoneNumber')?.errors?.['required']">Phone number is required</span>
+          <span *ngIf="loginForm.get('phoneNumber')?.errors?.['pattern']">Please enter a valid 10-digit phone number</span>
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <button
+        type="submit"
+        class="login-button"
+        [disabled]="loginForm.invalid || loading"
+      >
+        <span *ngIf="!loading">Continue</span>
+        <span *ngIf="loading" class="spinner"></span>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Don't have an account? <a routerLink="/register">Register</a></p>
+      <p><a routerLink="/forgot-password">Forgot Password?</a></p>
+    </div>
+  </div>
+</div> 

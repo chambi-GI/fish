@@ -1,0 +1,162 @@
+header {
+  .logo-container {
+    display: flex;
+    align-items: center;
+    padding: 0.4rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    width:100%;
+
+    .logo {
+      height: 80px;
+      width: auto;
+      margin-right: 1rem;
+    }
+
+    .brand-name {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: #3cb4ef;
+    }
+  }
+
+  .navbar-sticky {
+    .navbar {
+      padding: 0.5rem 1rem;
+
+      .navbar-toolbar {
+        width: 100%;
+      }
+
+      .navbar-nav {
+        .nav-link {
+          color: #333;
+          font-weight: 500;
+          padding: 0.5rem 1rem;
+          transition: color 0.3s ease;
+
+          &:hover, &.active {
+            color: #0d6efd;
+          }
+        }
+      }
+.align-items-rights{
+ margin-left:24em;
+}
+      .navbar-tool {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        .navbar-tool-icon-box {
+          width: 2.5rem;
+          height: 2.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          color: #fff;
+          text-decoration: none;
+
+          .navbar-tool-label {
+            position: absolute;
+            top: -0.25rem;
+            right: -0.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background-color: #0d6efd;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.25rem;
+          }
+        }
+
+        .navbar-tool-text {
+          margin-left: 0.75rem;
+          text-decoration: none;
+          color: #333;
+
+          small {
+            display: block;
+            font-size: 0.75rem;
+            color: #6c757d;
+          }
+        }
+      }
+    }
+  }
+}
+
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  background: #fff;
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+  margin-right: 0.5rem;
+}
+
+.brand-name {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #3cb4ef;
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 12px;
+  }
+  .logo-container {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .brand-name {
+    font-size: 1.3rem;
+  }
+  .logo {
+    height: 40px;
+  }
+  .btn {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-header {
+    padding: 6px 4px;
+  }
+  .logo {
+    height: 32px;
+  }
+  .brand-name {
+    font-size: 1rem;
+  }
+}
+
+body {
+  padding-top: 72px; /* Adjust to match header height */
+} 

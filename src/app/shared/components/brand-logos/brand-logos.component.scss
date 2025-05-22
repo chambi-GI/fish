@@ -1,0 +1,35 @@
+.brand-logos-section {
+  padding: 3rem 0;
+  background-color: #f8f9fa;
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+    font-weight: 600;
+  }
+
+  .brand-logo {
+    text-align: center;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      max-height: 60px;
+      filter: grayscale(100%);
+      opacity: 0.6;
+      transition: all 0.3s ease;
+
+      &:hover {
+        filter: grayscale(0%);
+        opacity: 1;
+      }
+    }
+  }
+} 

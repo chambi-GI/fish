@@ -1,0 +1,231 @@
+<app-header></app-header>
+
+<div class="main-container">
+  <div class="container">
+    <div class="left">
+      <!-- Toggle Buttons -->
+      <div class="toggle-buttons text-center">
+        <button (click)="seller_selection()" [class.active]="seller_selected">Seller Account</button>
+        <button (click)="buyer_selection()" [class.active]="buyer_selected">Buyer Account</button>
+      </div>
+      <div class="text-center my-3">
+        <a class="btn btn-outline-primary" href="/auth/buyer-login">Go to Buyer Login</a>
+      </div>
+
+      <!-- Seller Login -->
+      <ng-container *ngIf="seller_selected">
+        <h2 class="text-center">Seller Sign in</h2>
+        <hr />
+        <div class="seller-container">
+          <form [formGroup]="loginForm" (ngSubmit)="sendSellerOtp(toggleSellerModal)">
+            <div class="form-group">
+              <label for="phone">Seller Phone Number</label>
+              <div class="phone-input">
+                <select>
+                  <option value="TZ">+255</option>
+                </select>
+                <input
+                  type="text"
+                  formControlName="phoneNumber"
+                  placeholder="(xxx) xxx xxx"
+                  [class.is-invalid]="loginForm.get('phoneNumber')?.invalid && loginForm.get('phoneNumber')?.touched"
+                />
+                <div class="invalid-feedback" *ngIf="loginForm.get('phoneNumber')?.errors?.['required']">
+                  Phone number is required
+                </div>
+                <div class="invalid-feedback" *ngIf="loginForm.get('phoneNumber')?.errors?.['pattern']">
+                  Please enter a valid 9-digit phone number
+                </div>
+              </div>
+            </div>
+
+            <div class="options">
+              <a href="#">Forgot password</a>
+            </div>
+
+            <button class="btn" type="submit" [disabled]="loginForm.invalid || isLoading">
+              <span *ngIf="!isLoading">Send OTP</span>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+
+            <div class="signup">
+              Don't have an account? <a href="/auth/register">Sign up</a>
+            </div>
+          </form>
+        </div>
+      </ng-container>
+
+  
+      <ng-template #toggleBuyerModal let-modal>
+        <div class="modal-content">
+          <div class="modal-header bg-secondary">
+            <h5 class="modal-title text-white">OTP Verification</h5>
+            <button
+              class="btn-close"
+              type="button"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              (click)="modal.close()"
+            ></button>
+          </div>
+
+          <div class="modal-body tab-content py-4">
+            <form [formGroup]="otpForm" (ngSubmit)="verifyBuyerOtp(modal)">
+              <div *ngIf="otpSent" class="otp-box mb-4">
+                <div class="form-group">
+                  <label for="otp">Enter OTP</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="otp"
+                    maxlength="6"
+                    placeholder="Enter 6-digit OTP"
+                    [class.is-invalid]="otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched"
+                  />
+                  <div class="invalid-feedback" *ngIf="otpForm.get('otp')?.errors?.['required']">
+                    OTP is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="otpForm.get('otp')?.errors?.['pattern']">
+                    Please enter a valid 6-digit OTP
+                  </div>
+                </div>
+
+                <button class="btn btn-success mt-3 w-100" type="submit" [disabled]="otpForm.invalid || isLoading">
+                  <span *ngIf="!isLoading">Verify OTPs</span>
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </button>
+
+                <div class="mt-2 text-center">
+                  <small class="text-muted">Didn't receive code?</small>
+                  <button class="btn btn-link p-0" (click)="resendOtp()" [disabled]="isLoading">
+                    <span *ngIf="!isLoading">Resend</span>
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Optional registration if user doesn't exist -->
+            <div *ngIf="isNewUser" class="mt-4">
+              <h5>It looks like you're new here.</h5>
+              <a href="/auth/register" class="btn btn-primary w-100 mt-3">Complete Registration</a>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+
+
+      <ng-template #toggleSellerModal let-modal>
+        <div class="modal-content">
+          <div class="modal-header bg-secondary">
+            <h5 class="modal-title text-white">OTP Verification</h5>
+            <button
+              class="btn-close"
+              type="button"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              (click)="modal.close()"
+            ></button>
+          </div>
+
+          <div class="modal-body tab-content py-4">
+            <form [formGroup]="otpForm" (ngSubmit)="verifySellerOtp(modal)">
+              <div *ngIf="otpSent" class="otp-box mb-4">
+                <div class="form-group">
+                  <label for="otp">Enter OTP</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="otp"
+                    maxlength="6"
+                    placeholder="Enter 6-digit OTP"
+                    [class.is-invalid]="otpForm.get('otp')?.invalid && otpForm.get('otp')?.touched"
+                  />
+                  <div class="invalid-feedback" *ngIf="otpForm.get('otp')?.errors?.['required']">
+                    OTP is required
+                  </div>
+                  <div class="invalid-feedback" *ngIf="otpForm.get('otp')?.errors?.['pattern']">
+                    Please enter a valid 6-digit OTP
+                  </div>
+                </div>
+
+                <button class="btn btn-success mt-3 w-100" type="submit" [disabled]="otpForm.invalid || isLoading">
+                  <span *ngIf="!isLoading">Verify OTPs</span>
+                  <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                </button>
+
+                <div class="mt-2 text-center">
+                  <small class="text-muted">Didn't receive code?</small>
+                  <button class="btn btn-link p-0" (click)="resendOtp()" [disabled]="isLoading">
+                    <span *ngIf="!isLoading">Resend</span>
+                    <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Optional registration if user doesn't exist -->
+            <div *ngIf="isNewUser" class="mt-4">
+              <h5>It looks like you're new here.</h5>
+              <a href="/auth/register" class="btn btn-primary w-100 mt-3">Complete Registration</a>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+
+      <ng-container *ngIf="buyer_selected">
+        <h2 class="text-center">Buyer Sign in</h2>
+        <hr />
+        <div class="seller-container">
+          <form [formGroup]="loginForm" (ngSubmit)="sendBuyerOtp(toggleBuyerModal)">
+            <div class="form-group">
+              <label for="phone">Buyer Phone Number</label>
+              <div class="phone-input">
+                <select>
+                  <option value="TZ">+255</option>
+                </select>
+                <input
+                  type="text"
+                  formControlName="phoneNumber"
+                  placeholder="(xxx) xxx xxx"
+                  [class.is-invalid]="loginForm.get('phoneNumber')?.invalid && loginForm.get('phoneNumber')?.touched"
+                />
+                <div class="invalid-feedback" *ngIf="loginForm.get('phoneNumber')?.errors?.['required']">
+                  Phone number is required
+                </div>
+                <div class="invalid-feedback" *ngIf="loginForm.get('phoneNumber')?.errors?.['pattern']">
+                  Please enter a valid 9-digit phone number
+                </div>
+              </div>
+            </div>
+
+            <div class="options">
+              <a href="#">Forgot password</a>
+            </div>
+
+            <button class="btn" type="submit" [disabled]="loginForm.invalid || isLoading">
+              <span *ngIf="!isLoading">Send OTP</span>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+
+            <div class="signup">
+              Don't have an account? <a href="/auth/register">Sign up</a>
+            </div>
+          </form>
+        </div>
+      </ng-container>
+    </div>
+
+ 
+    <ng-container *ngIf="buyer_selected">
+      <div class="right-buyer"></div>
+    </ng-container>
+    <ng-container *ngIf="seller_selected">
+      <div class="right-seller"></div>
+    </ng-container>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,113 @@
+{
+  "MENUITEMS": {
+    "SHOP": {
+      "TEXT": "Negozio",
+      "LIST": {
+        "Shoplayouts":"Layout del negozio",
+        "ShopGridLeftSidebar":"Griglia del negozio - Barra laterale sinistra",
+        "ShopGridRightSidebar":"Griglia del negozio - Barra laterale destra",
+        "ShopGridFiltersonTop":"Griglia del negozio - Filtri in alto",
+        "ShopListLeftSidebar":"Elenco dei negozi - Barra laterale sinistra",
+        "ShopListRightSidebar":"Elenco dei negozi - Barra laterale destra",
+        "ShopListFiltersonTop":"Elenco dei negozi - Filtri in alto",
+        "Marketplace":"Mercato",
+        "SingleItemPage":"Pagina articolo singolo",
+        "VendorPage":"Pagina del venditore",
+        "Cart":"Carrello",
+        "Checkout":"Guardare",
+        "Grocerystore":"Negozio di alimentari",
+        "ProductCatalog":"Catalogo dei prodotti",
+        "SingleProductPage":"Pagina del singolo prodotto",
+        "FoodDelivery":"Consegna del cibo",
+        "CategoryPage":"Pagina di categoria",
+        "SingleItem":"Articolo singolo (Ristorante)",
+        "NFTMarketplace":"Mercato NFT",
+        "Catalogv1":"Catalogo v.1",
+        "Catalogv2":"Catalogo v.2",
+        "SingleItemAuctionLive":"Oggetto singolo - Asta dal vivo",
+        "SingleItemAuctionEnded":"Oggetto singolo - Asta conclusa",
+        "SingleItemBuyNow":"Articolo singolo - Acquista ora",
+        "ConnectWallet":"Collega il portafoglio",
+        "CreateNewItem":"Crea nuovo oggetto",
+        "Shoppages":"Pagine del negozio",
+        "ShopCategories":"Categorie di negozi",
+        "ProductPagev1":"Pagina del prodotto v.1",
+        "ProductPagev2":"Pagina del prodotto v.2",
+        "CheckoutDetails":"Cassa - Dettagli",
+        "CheckoutShipping":"Cassa - Spedizione",
+        "CheckoutPayment":"Cassa - Pagamento",
+        "CheckoutReview":"Cassa - Revisione",
+        "CheckoutComplete":"Cassa - Completa",
+        "OrderTracking":"Tracciamento dell'ordine",
+        "ProductComparison":"Confronto prodotti"
+      }
+    },
+    "ACCOUNT": {
+      "TEXT": "Account",
+      "LIST": {
+        "ShopUserAccount":"Account utente del negozio",
+        "OrdersHistory":"Cronologia degli ordini",
+        "ProfileSettings":"Impostazioni del profilo",
+        "AccountAddresses":"Indirizzi di conto",
+        "PaymentMethods":"Modalità di pagamento",
+        "Wishlist":"Lista dei desideri",
+        "MyTickets":"I miei biglietti",
+        "SingleTicket":"Biglietto unico",
+        "VendorDashboard":"Dashboard del fornitore",
+        "Settings":"Impostazioni",
+        "Purchases":"Purchases",
+        "Favorites":"Preferiti",
+        "Sales":"I saldi",
+        "Products":"Prodotti",
+        "AddNewProduct":"Aggiungi nuovo prodotto",
+        "Payouts":"Pagamenti",
+        "NFTMarketplace":"Mercato NFT",
+        "WalletPayouts":"Portafoglio e pagamenti",
+        "MyItems":"I miei articoli",
+        "MyCollections":"Le mie raccolte",
+        "Notifications":"Notifiche",
+        "SignIn":"Accedi / Registrati",
+        "PasswordRecovery":"Recupero della password"
+      }
+    },
+    "PAGES": {
+      "TEXT": "Pagine",
+      "LIST": {
+       "NavbarVariants":"Varianti della barra di navigazione",
+       "1LevelLight":"1 livello di luce",
+       "1LevelDark":"1 livello scuro",
+       "2LevelLight":"Luce a 2 livelli",
+       "2LevelDark":"2 livello scuro",
+       "3LevelLight":"Luce a 3 livelli",
+       "3LevelDark":"3 livello scuro",
+       "ElectronicsStore":"Negozio di elettronica",
+       "Marketplace":"Mercato",
+       "SideMenu":"Menù Laterale (Drogheria)",
+       "AboutUs":"Chi siamo",
+       "Contacts":"Contatti",
+       "HelpCenter":"Centro assistenza",
+       "HelpTopics":"Argomenti di aiuto",
+       "SingleTopic":"Argomento unico",
+       "SubmitRequest":"Invia una richiesta",
+       "404NotFound":"404 non trovato",
+       "404SimpleText":"404 - Testo semplice",
+       "404Illustration":"404 - Illustrazione",
+       "StickyFooterDemo":"Demo piè di pagina appiccicoso"
+      }
+    },
+    "BLOGS": {
+      "TEXT": "Blog",
+      "LIST": {
+        "BlogListLayouts":"Layout elenco blog",
+        "ListwithSidebar":"Elenco con barra laterale",
+        "ListnoSidebar":"Non elencare la barra laterale",
+        "BlogGridLayouts":"Layout della griglia del blog",
+        "GridwithSidebar":"Griglia con barra laterale",
+        "GridnoSidebar":"Griglia senza barra laterale",
+        "SinglePostLayouts":"Layout di posta singola",
+        "ArticlewithSidebar":"Articolo con barra laterale",
+        "ArticlenoSidebar":"Articolo no Barra laterale"
+      }
+    }
+  }
+}

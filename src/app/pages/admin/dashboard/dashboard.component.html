@@ -1,0 +1,77 @@
+<div class="dashboard-container">
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="card stat-card">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Total Orders</h6>
+          <h2 class="card-title mb-0">{{ totalOrders }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card stat-card">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Total Revenue</h6>
+          <h2 class="card-title mb-0">${{ totalRevenue | number:'1.2-2' }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card stat-card">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Best Sellers</h6>
+          <ul class="list-unstyled mb-0">
+            <li *ngFor="let product of bestSellers">
+              <span class="fw-bold">{{ product.name }}</span>
+              <span class="text-muted">({{ product.totalSold }} sold)</span>
+            </li>
+            <li *ngIf="bestSellers.length === 0" class="text-muted">No data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-lg-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Order Trends (Last 7 Days)</h5>
+          <canvas baseChart
+                  [datasets]="[{ data: orderChartData, label: 'Orders' }]"
+                  [labels]="orderChartLabels"
+                  [options]="{ responsive: true }"
+                  [legend]="true"
+                  [type]="orderChartType">
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Recent Orders</h5>
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let order of recentOrders">
+                <td>#{{ order.id }}</td>
+                <td>{{ order.createdAt | date:'shortDate' }}</td>
+                <td>${{ order.total | number:'1.2-2' }}</td>
+              </tr>
+              <tr *ngIf="recentOrders.length === 0">
+                <td colspan="3" class="text-muted text-center">No recent orders</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

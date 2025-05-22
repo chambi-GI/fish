@@ -1,0 +1,40 @@
+<div class="seller-products-page">
+  <h1>My Products</h1>
+
+  <div class="actions">
+    <button class="btn btn-primary" (click)="openAddProductModal()">
+      <i class="ci ci-plus"></i> Add New Product
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading products...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error && products.length" class="products-grid">
+    <div class="product-card" *ngFor="let product of products">
+      <div class="product-header">
+        <div class="product-name">{{ product.name }}</div>
+        <div class="product-category">{{ product.categoryId }}</div>
+      </div>
+      <div class="product-body">
+        <div class="product-price">Price: {{ product.unitPrice | currency:'TZS' }}</div>
+        <div class="product-stock">Stock: {{ product.availableQuantity }}</div>
+      </div>
+      <div class="product-footer">
+        <button class="btn btn-outline-secondary btn-sm" (click)="openEditProductModal(product)">Edit</button>
+        <button class="btn btn-outline-danger btn-sm" (click)="deleteProduct(product.id)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && !products.length" class="no-products">
+    <p>No products found. Click "Add New Product" to get started!</p>
+  </div>
+
+  <app-add-product-modal 
+    *ngIf="showAddProductModal" 
+    (close)="closeAddProductModal()" 
+    (productAdded)="onProductAdded()"
+    [product]="editingProduct"
+  ></app-add-product-modal>
+</div>

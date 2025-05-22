@@ -1,0 +1,44 @@
+<header class="seller-header">
+  <div class="navbar-sticky bg-light">
+    <div class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-8">
+            <div class="logo-container">
+              <img src="assets/img/logo.png" alt="TanFish Market" class="logo">
+              <span class="brand-name" >TanFish Market</span>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-auto">
+             
+              <div class="navbar-tool ms-3">
+                <div class="navbar-tool-icon-box">
+                  <i class="navbar-tool-icon ci-user"></i>
+                </div>
+                <div class="navbar-tool-text ms-2">
+                  <small>Welcome,</small>
+                  <span class="d-block">{{sellerName}}</span>
+                </div>
+              </div>
+            
+
+              <div class="navbar-tool ms-3">
+                <button class="navbar-tool-icon-box" (click)="logout()">
+                  <i class="navbar-tool-icon ci-sign-out"></i>
+                </button>
+                <div class="navbar-tool-text ms-2">
+                  <small>Logout</small>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+        
+        </div>
+     
+
+      </div>
+    </div>
+  </div>
+</header>

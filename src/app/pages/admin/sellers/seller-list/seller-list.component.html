@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Sellers Management</h4>
+        </div>
+        <div class="card-body">
+          <!-- Loading Spinner -->
+          <div class="text-center" *ngIf="loading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <!-- Sellers Table -->
+          <div class="table-responsive" *ngIf="!loading">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let seller of sellers">
+                  <td>{{ seller.name }}</td>
+                  <td>{{ seller.email }}</td>
+                  <td>{{ seller.phone }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="seller.isVerified ? 'bg-success' : 'bg-warning'">
+                      {{ seller.isVerified ? 'Verified' : 'Unverified' }}
+                    </span>
+                  </td>
+                  <td>
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-info" (click)="viewSellerDetails(seller)">
+                        <i class="ci-eye"></i> View
+                      </button>
+                      <button class="btn btn-sm" 
+                              [ngClass]="seller.isVerified ? 'btn-warning' : 'btn-success'"
+                              (click)="seller.isVerified ? unverifySeller(seller) : verifySeller(seller)">
+                        <i class="ci" [ngClass]="seller.isVerified ? 'ci-x' : 'ci-check'"></i>
+                        {{ seller.isVerified ? 'Unverify' : 'Verify' }}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seller Details Modal -->
+  <div class="modal fade" id="sellerDetailsModal" tabindex="-1" *ngIf="selectedSeller">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Seller Details</h5>
+          <button type="button" class="btn-close" (click)="closeDetails()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Basic Information</h6>
+              <p><strong>Name:</strong> {{ selectedSeller.name }}</p>
+              <p><strong>Email:</strong> {{ selectedSeller.email }}</p>
+              <p><strong>Phone:</strong> {{ selectedSeller.phone }}</p>
+              <p><strong>Address:</strong> {{ selectedSeller.address }}</p>
+            </div>
+            <div class="col-md-6">
+              <h6>License Information</h6>
+              <div *ngIf="selectedSeller.license">
+                <p><strong>License Number:</strong> {{ selectedSeller.license.number }}</p>
+                <p><strong>Expiry Date:</strong> {{ selectedSeller.license.expiryDate | date }}</p>
+               
+              </div>
+              <p *ngIf="!selectedSeller.license">No license information available</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeDetails()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

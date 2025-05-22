@@ -1,0 +1,104 @@
+<header class="buyer-header">
+  <div class="logo">TanFish <span>Market</span></div>
+  <input class="search-bar" placeholder="Search" />
+  <div class="header-actions">
+    <i class="ci ci-cart"></i>
+    <div class="account-dropdown">Account <i class="ci ci-chevron-down"></i></div>
+  </div>
+</header>
+
+<nav class="breadcrumb">
+  <span>Dashboard</span>
+</nav>
+
+<main class="buyer-dashboard-main">
+  <h1 class="dashboard-title">Dashboard</h1>
+
+  <div class="dashboard-top-row">
+    <div class="welcome-card">
+      <div class="welcome-avatar">
+        <img [src]="user.avatar" alt="Profile" />
+      </div>
+      <div class="welcome-info">
+        <div class="welcome-label">Welcome back!</div>
+        <div class="welcome-name">{{ user.name }}</div>
+        <div class="welcome-email">{{ user.email }}</div>
+      </div>
+      <span class="welcome-role">{{ user.role }}</span>
+    </div>
+    <div class="dashboard-cards">
+      <div class="dashboard-card">
+        <div class="card-title">Today's Purchases</div>
+        <div class="card-value">{{ dashboard.todaysPurchases | currency:'TZS' }}</div>
+        <div class="card-sub">{{ dashboard.salesChange }}% from yesterday</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-title">New Orders</div>
+        <div class="card-value">{{ dashboard.newOrders }}</div>
+        <div class="card-sub">{{ dashboard.ordersNeedingAttention }} needs attention</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-title">Items Bought</div>
+        <div class="card-value">{{ dashboard.itemsBought }}</div>
+        <div class="card-sub">Top: {{ dashboard.topItems }}</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-title">In Cart</div>
+        <div class="card-value">{{ dashboard.itemsInCart }} items</div>
+        <div class="card-sub text-danger">Restock needed soon</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-actions-section">
+    <div class="quick-actions">
+      <div class="quick-action" *ngFor="let action of quickActions">
+        <i class="ci" [class]="action.icon"></i>
+        <span>{{ action.label }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-chips">
+    <span class="chip" *ngFor="let cat of categories" [class.active]="cat.active">{{ cat.label }}</span>
+  </div>
+
+  <div class="recent-orders-section">
+    <h2 class="section-title">Recent Orders</h2>
+    <div class="orders-grid">
+      <div class="order-card" *ngFor="let order of dashboard.recentOrders">
+        <div class="order-header">
+          <span class="order-id">Order #{{ order.orderNumber }}</span>
+          <span class="order-date">{{ order.date | date:'mediumDate' }}</span>
+        </div>
+        <div class="order-body">
+          <div class="order-items">{{ order.items }} items</div>
+          <div class="order-amount">{{ order.total | currency:'TZS' }}</div>
+          <div class="order-customer">{{ order.customerName }}</div>
+          <div class="order-tracking">Tracking #{{ order.trackingNumber }}</div>
+        </div>
+        <div class="order-footer">
+          <span class="order-status delivered">{{ order.status }}</span>
+          <a class="order-link" href="#">View Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="buyer-footer">
+  <div class="footer-links">
+    <a href="#">Overview</a>
+    <a href="#">Features</a>
+    <a href="#">Pricing</a>
+    <a href="#">Careers</a>
+    <a href="#">Help</a>
+    <a href="#">Privacy</a>
+  </div>
+  <div class="footer-newsletter">
+    <span>Stay up to date</span>
+    <input placeholder="Enter your email" />
+    <button>Subscribe</button>
+  </div>
+  <div class="footer-copy">©2025 TanFish Market. All rights reserved.</div>
+</footer>

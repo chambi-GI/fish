@@ -1,0 +1,201 @@
+/* You can add global styles to this file, and also import other style files */
+//Home Swiper Slider
+
+
+.swiper-grid-column>.swiper-wrapper {
+    flex-wrap: wrap !important;
+    flex-direction: column !important;
+}
+
+.slick-slide {
+    margin-right: 25px !important;
+}
+
+
+.slick-prev {
+
+    position: absolute;
+    top: 47%;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-top: -1.375rem;
+    transition: all .3s ease-in-out;
+    border: 1px solid #e3e9ef;
+    border-radius: 50%;
+    background-color: #fff;
+    font-size: .8085rem;
+    line-height: 2.625rem;
+    text-align: center;
+    z-index: 10;
+    display: flex;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        font-family: "chambi-icons" !important;
+        font-size: 12px;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        color: #000;
+        opacity: 1;
+        left: 14px;
+    }
+}
+
+.slick-next {
+    position: absolute;
+    top: 47%;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-top: -1.375rem;
+    transition: all .3s ease-in-out;
+    border: 1px solid #e3e9ef;
+    border-radius: 50%;
+    background-color: #fff;
+    font-size: .8085rem;
+    line-height: 2.625rem;
+    text-align: center;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    right: 28px;
+    justify-content: center;
+
+
+    &::before {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        font-family: "chambi-icons" !important;
+        font-size: 12px;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        color: #000;
+        opacity: 1;
+        left: 15px;
+    }
+}
+
+.card-slider {
+    transition: all 0.3s ease-in-out;
+
+    .slick-prev {
+        left: 4%;
+        top: 42%;
+        visibility: hidden !important;
+        transition: all .3s ease-in-out;
+        transform: translate(0, 0%) !important;
+        background-color: #fff;
+    }
+
+    .slick-next {
+        right: 6%;
+        top: 40%;
+        transition: all .3s ease-in-out;
+        background-color: #fff;
+        transform: translate(0, 0%) !important;
+        visibility: hidden !important;
+    }
+
+    &:hover {
+        .slick-next {
+            transform: translateX(15px) !important;
+            visibility: visible !important;
+        }
+
+        .slick-prev {
+            transform: translateX(-15px) !important;
+            visibility: visible !important;
+        }
+
+    }
+
+}
+
+.card-custom {
+    transition: all 0.3s ease-in-out;
+
+    .slick-prev {
+        left: 3%;
+        top: 50%;
+        visibility: hidden !important;
+        transition: all .3s ease-in-out;
+        transform: translate(0, 0%) !important;
+        background-color: #fff;
+    }
+
+    .slick-next {
+        right: 5%;
+        top: 50%;
+        transition: all .3s ease-in-out;
+        background-color: #fff;
+        transform: translate(0, 0%) !important;
+        visibility: hidden !important;
+    }
+
+    &:hover {
+        .slick-next {
+            transform: translateX(15px) !important;
+            visibility: visible !important;
+        }
+
+        .slick-prev {
+            transform: translateX(-15px) !important;
+            visibility: visible !important;
+        }
+
+    }
+}
+
+#for-women{
+    button{
+        width: 2.25rem;
+        height: 2.25rem;
+        margin: 0.0625rem;
+        transition: all .3s ease-in-out;
+        border: 1px solid #e3e9ef;
+        border-radius: 50%;
+        background-color: #fff;
+        font-size: .6615rem;
+        line-height: 2.125rem;
+        text-align: center;
+    }
+}
+
+#for-men{
+        button{
+            width: 2.25rem;
+            height: 2.25rem;
+            margin: 0.0625rem;
+            transition: all .3s ease-in-out;
+            border: 1px solid #e3e9ef;
+            border-radius: 50%;
+            background-color: #fff;
+            font-size: .6615rem;
+            line-height: 2.125rem;
+            text-align: center;
+        }
+    }
+
+#for-kids{
+    button{
+        width: 2.25rem;
+        height: 2.25rem;
+        margin: 0.0625rem;
+        transition: all .3s ease-in-out;
+        border: 1px solid #e3e9ef;
+        border-radius: 50%;
+        background-color: #fff;
+        font-size: .6615rem;
+        line-height: 2.125rem;
+        text-align: center;
+    }
+}

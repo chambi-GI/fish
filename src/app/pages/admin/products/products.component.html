@@ -1,0 +1,291 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Products</h5>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-primary" (click)="showFilters = !showFilters">
+              <i class="ci-filter me-2"></i>Filters
+            </button>
+            <button class="btn btn-primary" (click)="openModal(productModal)">
+              <i class="ci-add me-2"></i>Add Product
+            </button>
+          </div>
+        </div>
+
+        <!-- Filters Panel -->
+        <div class="card-body border-bottom" *ngIf="showFilters">
+          <form (ngSubmit)="applyFilters()" class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Category</label>
+              <select class="form-select" [(ngModel)]="filters.categoryId" name="categoryId">
+                <option value="">All Categories</option>
+                <option *ngFor="let category of categories" [value]="category.id">
+                  {{category.name}}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Price Range</label>
+              <div class="input-group">
+                <input type="number" class="form-control" placeholder="Min" [(ngModel)]="filters.minPrice" name="minPrice">
+                <input type="number" class="form-control" placeholder="Max" [(ngModel)]="filters.maxPrice" name="maxPrice">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Status</label>
+              <select class="form-select" [(ngModel)]="filters.isActive" name="isActive">
+                <option value="">All</option>
+                <option [value]="true">Active</option>
+                <option [value]="false">Inactive</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Search</label>
+              <input type="text" class="form-control" placeholder="Search products..." [(ngModel)]="filters.search" name="search">
+            </div>
+            <div class="col-12 d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-outline-secondary" (click)="resetFilters()">Reset</button>
+              <button type="submit" class="btn btn-primary">Apply Filters</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card-body">
+          <!-- Loading Spinner -->
+          <div class="text-center py-4" *ngIf="loading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <!-- Products Grid -->
+          <div class="row g-4" *ngIf="!loading">
+            <div class="col-md-6 col-lg-4" *ngFor="let product of products">
+              <div class="card h-100">
+                <div class="position-relative">
+                  <img [src]="product.images[0]?.url || 'assets/img/placeholder.jpg'" class="card-img-top" [alt]="product.name"
+                       style="height: 200px; object-fit: cover;">
+                  <span class="badge position-absolute top-0 end-0 m-2"
+                        [ngClass]="product.isActive ? 'bg-success' : 'bg-danger'">
+                    {{product.isActive ? 'Active' : 'Inactive'}}
+                  </span>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{product.name}}</h5>
+                  <p class="card-text text-muted small">{{product.description | slice:0:100}}...</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h6 class="mb-0">{{product.price | currency}}</h6>
+                      <small class="text-muted">Stock: {{product.quantity}}</small>
+                    </div>
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-outline-primary" (click)="openModal(productModal, product)">
+                        <i class="ci-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(product.id)">
+                        <i class="ci-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 text-center py-4" *ngIf="products.length === 0">
+              <div class="text-muted">
+                <i class="ci-box me-2"></i>No products found
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Product Modal -->
+<ng-template #productModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{isEditing ? 'Edit' : 'Add'}} Product</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <!-- Product Images -->
+      <h6 class="mb-3">Product Images</h6>
+      <div class="product-images-grid">
+        <div class="main-image-upload">
+          <label class="image-upload-label" [class.drag-over]="dragOverIndex === 0"
+                 (dragover)="onDragOver($event, 0)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event, 0)">
+            <input type="file" (change)="onImageUpload($event, 0)" hidden>
+            <div class="image-upload-box">
+              <ng-container *ngIf="images.controls[0].value; else uploadIcon">
+                <img [src]="images.controls[0].value" alt="Main" />
+                <button type="button" class="btn btn-danger btn-sm mt-2" (click)="removeImage(0)">
+                  <i class="ci-trash"></i>
+                </button>
+              </ng-container>
+              <ng-template #uploadIcon>
+                <div class="upload-placeholder">
+                  <i class="ci-upload"></i>
+                  <span>Click to upload<br>or drag and drop<br>PNG, JPG or GIF (max. 2MB)</span>
+                </div>
+              </ng-template>
+              <div *ngIf="imageErrors[0]" class="text-danger small mt-1">{{imageErrors[0]}}</div>
+              <div *ngIf="imageProgress[0]" class="progress mt-1">
+                <div class="progress-bar" [style.width]="imageProgress[0] + '%'">{{imageProgress[0]}}%</div>
+              </div>
+            </div>
+          </label>
+        </div>
+        <div class="side-images">
+          <ng-container *ngFor="let ctrl of images.controls.slice(1,5); let i = index">
+            <label class="image-upload-label small" [class.drag-over]="dragOverIndex === i+1"
+                   (dragover)="onDragOver($event, i+1)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event, i+1)">
+              <input type="file" (change)="onImageUpload($event, i+1)" hidden>
+              <div class="image-upload-box small">
+                <ng-container *ngIf="ctrl.value; else uploadIconSmall">
+                  <img [src]="ctrl.value" alt="Side" />
+                  <button type="button" class="btn btn-danger btn-sm mt-2" (click)="removeImage(i+1)">
+                    <i class="ci-trash"></i>
+                  </button>
+                </ng-container>
+                <ng-template #uploadIconSmall>
+                  <div class="upload-placeholder small">
+                    <i class="ci-upload"></i>
+                    <span>Click to upload<br>or drag and drop<br>PNG, JPG or GIF (max. 2MB)</span>
+                  </div>
+                </ng-template>
+                <div *ngIf="imageErrors[i+1]" class="text-danger small mt-1">{{imageErrors[i+1]}}</div>
+                <div *ngIf="imageProgress[i+1]" class="progress mt-1">
+                  <div class="progress-bar" [style.width]="imageProgress[i+1] + '%'">{{imageProgress[i+1]}}%</div>
+                </div>
+              </div>
+            </label>
+          </ng-container>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Basic Information -->
+      <h6 class="mb-3">Basic Information</h6>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" formControlName="name"
+                 [ngClass]="{'is-invalid': productForm.get('name')?.touched && productForm.get('name')?.errors}">
+          <div class="invalid-feedback" *ngIf="productForm.get('name')?.touched && productForm.get('name')?.errors?.['required']">
+            Name is required
+          </div>
+          <div class="invalid-feedback" *ngIf="productForm.get('name')?.touched && productForm.get('name')?.errors?.['minlength']">
+            Name must be at least 3 characters
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Category</label>
+          <select class="form-select" formControlName="categoryId"
+                  [ngClass]="{'is-invalid': productForm.get('categoryId')?.touched && productForm.get('categoryId')?.errors}">
+            <option value="">Select Category</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{category.name}}
+            </option>
+          </select>
+          <div class="invalid-feedback" *ngIf="productForm.get('categoryId')?.touched && productForm.get('categoryId')?.errors?.['required']">
+            Category is required
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" rows="3" formControlName="description"
+                    [ngClass]="{'is-invalid': productForm.get('description')?.touched && productForm.get('description')?.errors}"></textarea>
+          <div class="invalid-feedback" *ngIf="productForm.get('description')?.touched && productForm.get('description')?.errors?.['required']">
+            Description is required
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Pricing & Inventory -->
+      <h6 class="mb-3">Pricing & Inventory</h6>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Price</label>
+          <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="number" class="form-control" formControlName="price"
+                   [ngClass]="{'is-invalid': productForm.get('price')?.touched && productForm.get('price')?.errors}">
+          </div>
+          <div class="invalid-feedback" *ngIf="productForm.get('price')?.touched && productForm.get('price')?.errors?.['required']">
+            Price is required
+          </div>
+          <div class="invalid-feedback" *ngIf="productForm.get('price')?.touched && productForm.get('price')?.errors?.['min']">
+            Price must be greater than 0
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Quantity</label>
+          <input type="number" class="form-control" formControlName="quantity"
+                 [ngClass]="{'is-invalid': productForm.get('quantity')?.touched && productForm.get('quantity')?.errors}">
+          <div class="invalid-feedback" *ngIf="productForm.get('quantity')?.touched && productForm.get('quantity')?.errors?.['required']">
+            Quantity is required
+          </div>
+          <div class="invalid-feedback" *ngIf="productForm.get('quantity')?.touched && productForm.get('quantity')?.errors?.['min']">
+            Quantity must be greater than 0
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">SKU</label>
+          <input type="text" class="form-control" formControlName="sku">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Status</label>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" formControlName="isActive">
+            <label class="form-check-label">Active</label>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- Additional Information -->
+      <h6 class="mb-3">Additional Information</h6>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Weight</label>
+          <div class="input-group">
+            <input type="number" class="form-control" formControlName="weight">
+            <select class="form-select" formControlName="unit" style="max-width: 100px;">
+              <option value="kg">kg</option>
+              <option value="g">g</option>
+              <option value="lb">lb</option>
+              <option value="oz">oz</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Discount</label>
+          <div class="input-group">
+            <input type="number" class="form-control" formControlName="discount" min="0" max="100">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Discount End Date</label>
+          <input type="date" class="form-control" formControlName="discountEndDate">
+        </div>
+      </div>
+
+      <div class="text-end mt-4">
+        <button type="button" class="btn btn-secondary me-2" (click)="modal.dismiss()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid || loading">
+          <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+          {{isEditing ? 'Update' : 'Create'}}
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template> 

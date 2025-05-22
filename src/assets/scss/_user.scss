@@ -1,0 +1,89 @@
+// 
+// user.scss
+// Use this to write your custom SCSS
+//
+
+
+// Lightbox
+@import "~ngx-lightbox/lightbox.css";
+
+.topbar {
+    .tns-carousel {
+        .carousel-control-prev {
+            left: -2rem;
+        }
+
+        .carousel-control-next {
+            right: -2rem;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    width: 48px !important;
+    height: 48px !important;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid #e3e9ef;
+
+    &::after {
+        font-size: 16px !important;
+        color: #000;
+    }
+}
+
+.swiper-wrapper {
+    padding-bottom: 32px;
+}
+
+.swiper-pagination-bullet {
+    width: 5px;
+    height: 5px;
+    border-radius: .15625rem;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: $carousel-dot-active-color;
+    width: 20px;
+}
+
+.ngxImageZoomContainer {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+#categories .accordion-header {
+    padding-right: 1.875rem;
+    padding-left: 1.875rem;
+    border-bottom: var(--cz-border-width) var(--cz-border-style) var(--cz-border-color) !important;
+    height: 52px;
+    padding-top: 6px;
+}
+
+#shop-menu .accordion-header {
+    padding-right: 1.875rem;
+    padding-left: 1.875rem;
+    border-bottom: var(--cz-border-width) var(--cz-border-style) var(--cz-border-color) !important;
+    height: 52px;
+    padding-top: 6px;
+}
+
+.bg-faded-primary {
+    background-color: rgba(254, 105, 106, .09) !important;
+}
+
+.bg-faded-accent {
+    background-color: rgba(78, 84, 200, .09) !important;
+}
+
+.bg-darkers {
+    --bs-bg-opacity: 1;
+    background-color: #0b79e7;
+}

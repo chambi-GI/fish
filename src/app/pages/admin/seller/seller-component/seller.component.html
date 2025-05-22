@@ -1,0 +1,290 @@
+<main class="seller-dashboard-main" style="background-color: rgb(198, 241, 255); padding:2em;">
+  <h1 class="dashboard-title">Dashboard</h1>
+
+  <div class="dashboard-top-row">
+    <div class="dashboard-cards">
+      <div class="dashboard-card">
+          <div class="profile-info-item">
+            <i class="ci ci-mail"></i>
+            <div>
+              <div class="profile-info-label">Email</div>
+              <div class="profile-info-value">{{ user?.email }}</div>
+            </div>
+          </div>
+          <button class="btn btn-primary w-80 mb-1" (click)="openProfileModal()">Complete Your Profile</button>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="card-title">Today's Sales</div>
+        <div class="card-value">{{ dashboard?.todaysSales | currency:'TZS' }}</div>
+        <div class="card-sub">{{ dashboard?.salesChange }}% from yesterday</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-title">New Orders</div>
+        <div class="card-value">{{ dashboard?.newOrders }}</div>
+        <div class="card-sub">{{ dashboard?.ordersNeedingAttention }} needs attention</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-title">Fish sold</div>
+        <div class="card-value">{{ dashboard?.fishSold }}</div>
+        <div class="card-sub">Top: {{ dashboard?.topFish }}</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="card-title">Low stock</div>
+        <div class="card-value">{{ dashboard?.lowStockItems }} items</div>
+        <div class="card-sub text-danger">Restock needed soon</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-actions-section">
+    <div class="quick-actions">
+      <div class="profile-card">
+        <!-- <h5 class="profile-section-title">Account Settings</h5> -->
+        <div class="row">
+          <div class="quick-action col-3">
+            <i class="ci ci-user"></i>
+            <span>Profile</span>
+
+          </div>
+          <div class="quick-action col-3">
+            <i class="ci ci-folder"></i>
+            <span>Documents</span>
+          </div>
+          <div class="quick-action  col-3">
+            <i class="ci ci-wallet"></i>
+            <span>Payment</span>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="quick-action" (click)="openAddProductModal()" title="Add a new product to your inventory">
+        <i class="ci ci-add"></i>
+        <span>Add Product</span>
+      </div>
+      <div class="quick-action" title="View your sales reports">
+        <i class="ci ci-clip"></i>
+
+        <span>Reports</span>
+      </div>
+      <div class="quick-action" title="Manage your inventory">
+        <i class="ci ci-package"></i>
+        <span>Inventory</span>
+      </div>
+      <div class="quick-action" title="View sales analytics">
+        <i class="ci ci-arrow-up"></i>
+
+        <span>Analytics</span>
+      </div>
+    </div>
+  </div>
+
+
+  <section class="categories-section py-4">
+    <div class="container">
+      <div class="section-header text-center mb-4">
+        <h2 class="section-title">Browse Categories</h2>
+      </div>
+      
+      <!-- Category Buttons -->
+      <div class="category-buttons text-center mb-4">
+        <button class="category-btn" 
+                [class.active]="selectedCategory === 'all'"
+                (click)="filterByCategory('all')" style="border-radius:4rem;padding:1.2em;background-color: azure;">
+          <i class="ci-fish me-2"></i>
+          All Categories
+        </button>
+        <ng-container *ngFor="let category of categoryList">
+          <button class="category-btn" 
+                  [class.active]="selectedCategory === category.id"
+                  (click)="filterByCategory(category.id)">
+            <i class="ci-fish me-2"></i>
+            {{category.name}}
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </section>
+
+  <div class="recent-orders-section">
+    <h2 class="section-title">Recent Orders</h2>
+    <div class="orders-grid">
+      <div class="order-card" *ngFor="let order of dashboard?.recentOrders">
+        <div class="order-header">
+          <span class="order-id">Order #{{ order.orderNumber }}</span>
+          <span class="order-date">{{ order.date | date:'mediumDate' }}</span>
+        </div>
+        <div class="order-body">
+          <div class="order-items">{{ order.items.length }} items</div>
+          <div class="order-amount">{{ order.total | currency:'TZS' }}</div>
+          <div class="order-customer">{{ order.customerName }}</div>
+          <div class="order-tracking">Tracking #{{ order.trackingNumber }}</div>
+        </div>
+        <div class="order-footer">
+          <span class="order-status delivered">{{ order.status }}</span>
+          <a class="order-link" [routerLink]="['/admin/seller/orders', order.id]">View Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<app-add-product-modal *ngIf="showAddProductModal" (close)="closeAddProductModal()"></app-add-product-modal>
+<div class="modal-overlay" *ngIf="showLogoutModal">
+  <div class="modal-content">
+    <h3>Confirm Logout</h3>
+    <p>Are you sure you want to log out?</p>
+    <div class="modal-actions">
+      <button class="btn btn-danger" (click)="logout()">Yes, Logout</button>
+      <button class="btn btn-secondary" (click)="showLogoutModal = false">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-overlay" *ngIf="showProfileModal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content profile-modal text-center">
+      <div class="modal-header">
+        <h2 id="profileModalTitle">Complete Your Profile</h2>
+        <button type="button" class="btn-close" aria-label="Close" (click)="confirmClose()">&times;</button>
+      </div>
+
+
+      <form [formGroup]="profileInfoForm" *ngIf="!showReview" (ngSubmit)="submitProfileStepper()" novalidate
+        #userForm="ngForm">
+
+        <!-- {{userForm.value|json}} -->
+        <div class="row">
+
+
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label>Business Name</label>
+              <input class="form-control" formControlName="businessName" placeholder="Business Name"
+                autocomplete="organization" [attr.aria-invalid]="profileInfoForm.get('businessName')?.invalid"
+                [attr.aria-describedby]="'businessNameError'" />
+              <div id="businessNameError" class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('businessName')?.invalid && profileInfoForm.get('businessName')?.touched">
+                Business Name is required.
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label>Address</label>
+              <input class="form-control" formControlName="address" placeholder="Address" autocomplete="street-address"
+                [attr.aria-invalid]="profileInfoForm.get('address')?.invalid"
+                [attr.aria-describedby]="'addressError'" />
+              <div id="addressError" class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('address')?.invalid && profileInfoForm.get('address')?.touched">
+                Address is required.
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label>Country</label>
+              <select class="form-control" formControlName="country" autocomplete="country"
+                [attr.aria-invalid]="profileInfoForm.get('country')?.invalid" [attr.aria-describedby]="'countryError'">
+                <option value="">Select Country</option>
+                <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+              </select>
+              <div id="countryError" class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('country')?.invalid && profileInfoForm.get('country')?.touched">
+                Country is required.
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label>Region</label>
+              <select class="form-control" formControlName="region" autocomplete="region"
+                [attr.aria-invalid]="profileInfoForm.get('region')?.invalid" [attr.aria-describedby]="'regionError'">
+                <option value="">Select Region</option>
+                <option *ngFor="let r of regions" [value]="r">{{ r }}</option>
+              </select>
+              <div id="regionError" class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('region')?.invalid && profileInfoForm.get('region')?.touched">
+                Region is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label>District</label>
+              <input class="form-control" formControlName="district" placeholder="District"
+                autocomplete="address-level2" [attr.aria-invalid]="profileInfoForm.get('district')?.invalid"
+                [attr.aria-describedby]="'districtError'" />
+              <div id="districtError" class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('district')?.invalid && profileInfoForm.get('district')?.touched">
+                District is required.
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label>National ID</label>
+              <input class="form-control" formControlName="nationalId" placeholder="National ID" autocomplete="off"
+                [attr.aria-invalid]="profileInfoForm.get('nationalId')?.invalid"
+                [attr.aria-describedby]="'nationalIdError'" />
+              <div id="nationalIdError" class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('nationalId')?.invalid && profileInfoForm.get('nationalId')?.touched">
+                National ID is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label>Front National ID (Image)</label>
+              <input type="file" class="form-control" accept="image/*"
+                (change)="onFileSelected($event, 'frontNationalId')" [attr.aria-describedby]="'frontNationalIdError'" />
+              <img *ngIf="frontNationalIdPreview" [src]="frontNationalIdPreview" alt="Front ID Preview"
+                class="img-thumbnail mt-2" />
+              <div id="frontNationalIdError" class="invalid-feedback d-block" *ngIf="frontNationalIdError">
+                Front National ID image is required.
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label>Back National ID (Image)</label>
+              <input type="file" class="form-control" accept="image/*"
+                (change)="onFileSelected($event, 'backNationalId')" [attr.aria-describedby]="'backNationalIdError'" />
+              <img *ngIf="backNationalIdPreview" [src]="backNationalIdPreview" alt="Back ID Preview"
+                class="img-thumbnail mt-2" />
+              <div id="backNationalIdError" class="invalid-feedback d-block" *ngIf="backNationalIdError">
+                Back National ID image is required.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-success" type="submit" [disabled]="isLoading || profileInfoForm.invalid">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

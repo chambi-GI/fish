@@ -1,0 +1,242 @@
+<div
+  class="modal-overlay"
+  *ngIf="showProfileModal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="profileModalTitle"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content profile-modal text-center">
+      <div class="modal-header">
+        <h2 id="profileModalTitle">Complete Your Profile</h2>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="confirmClose()"
+        ></button>
+      </div>
+
+      <form
+        [formGroup]="profileInfoForm"
+        *ngIf="!showReview"
+        (ngSubmit)="submitProfileStepper()"
+        novalidate
+      >
+        <div class="row">
+          <!-- Business Name -->
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label for="businessName">Business Name</label>
+              <input
+                id="businessName"
+                class="form-control"
+                formControlName="businessName"
+                placeholder="Business Name"
+                autocomplete="organization"
+                [attr.aria-invalid]="profileInfoForm.get('businessName')?.invalid"
+                aria-describedby="businessNameError"
+              />
+              <div
+                id="businessNameError"
+                class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('businessName')?.invalid && profileInfoForm.get('businessName')?.touched"
+              >
+                Business Name is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label for="address">Address</label>
+              <input
+                id="address"
+                class="form-control"
+                formControlName="address"
+                placeholder="Address"
+                autocomplete="street-address"
+                [attr.aria-invalid]="profileInfoForm.get('address')?.invalid"
+                aria-describedby="addressError"
+              />
+              <div
+                id="addressError"
+                class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('address')?.invalid && profileInfoForm.get('address')?.touched"
+              >
+                Address is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Country -->
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label for="country">Country</label>
+              <select
+                id="country"
+                class="form-control"
+                formControlName="country"
+                autocomplete="country"
+                [attr.aria-invalid]="profileInfoForm.get('country')?.invalid"
+                aria-describedby="countryError"
+              >
+                <option value="">Select Country</option>
+                <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+              </select>
+              <div
+                id="countryError"
+                class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('country')?.invalid && profileInfoForm.get('country')?.touched"
+              >
+                Country is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Region -->
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label for="region">Region</label>
+              <select
+                id="region"
+                class="form-control"
+                formControlName="region"
+                autocomplete="region"
+                [attr.aria-invalid]="profileInfoForm.get('region')?.invalid"
+                aria-describedby="regionError"
+              >
+                <option value="">Select Region</option>
+                <option *ngFor="let r of regions" [value]="r">{{ r }}</option>
+              </select>
+              <div
+                id="regionError"
+                class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('region')?.invalid && profileInfoForm.get('region')?.touched"
+              >
+                Region is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- District -->
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label for="district">District</label>
+              <input
+                id="district"
+                class="form-control"
+                formControlName="district"
+                placeholder="District"
+                autocomplete="address-level2"
+                [attr.aria-invalid]="profileInfoForm.get('district')?.invalid"
+                aria-describedby="districtError"
+              />
+              <div
+                id="districtError"
+                class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('district')?.invalid && profileInfoForm.get('district')?.touched"
+              >
+                District is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- National ID -->
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label for="nationalId">National ID</label>
+              <input
+                id="nationalId"
+                class="form-control"
+                formControlName="nationalId"
+                placeholder="National ID"
+                autocomplete="off"
+                [attr.aria-invalid]="profileInfoForm.get('nationalId')?.invalid"
+                aria-describedby="nationalIdError"
+              />
+              <div
+                id="nationalIdError"
+                class="invalid-feedback d-block"
+                *ngIf="profileInfoForm.get('nationalId')?.invalid && profileInfoForm.get('nationalId')?.touched"
+              >
+                National ID is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Front National ID (Image) -->
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label for="frontNationalId">Front National ID (Image)</label>
+              <input
+                id="frontNationalId"
+                type="file"
+                class="form-control"
+                accept="image/*"
+                (change)="onFileSelected($event, 'frontNationalId')"
+                aria-describedby="frontNationalIdError"
+              />
+              <img
+                *ngIf="frontNationalIdPreview"
+                [src]="frontNationalIdPreview"
+                alt="Front ID Preview"
+                class="img-thumbnail mt-2"
+              />
+              <div
+                id="frontNationalIdError"
+                class="invalid-feedback d-block"
+                *ngIf="frontNationalIdError"
+              >
+                Front National ID image is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Back National ID (Image) -->
+          <div class="col-md-6">
+            <div class="form-group mb-2">
+              <label for="backNationalId">Back National ID (Image)</label>
+              <input
+                id="backNationalId"
+                type="file"
+                class="form-control"
+                accept="image/*"
+                (change)="onFileSelected($event, 'backNationalId')"
+                aria-describedby="backNationalIdError"
+              />
+              <img
+                *ngIf="backNationalIdPreview"
+                [src]="backNationalIdPreview"
+                alt="Back ID Preview"
+                class="img-thumbnail mt-2"
+              />
+              <div
+                id="backNationalIdError"
+                class="invalid-feedback d-block"
+                *ngIf="backNationalIdError"
+              >
+                Back National ID image is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+          <button
+            class="btn btn-success"
+            type="submit"
+            [disabled]="isLoading || profileInfoForm.invalid"
+          >
+            <span
+              *ngIf="isLoading"
+              class="spinner-border spinner-border-sm me-2"
+            ></span>
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

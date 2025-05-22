@@ -1,0 +1,103 @@
+<header class="d-flex justify-content-between align-items-center main-header">
+  <div class="logo-container d-flex align-items-center">
+    <a routerLink="/">
+    <img src="../../../assets/img/logo.png" alt="TanFish Market" class="logo">
+    <span class="brand-name">TanFish Market</span>
+    </a>
+  </div>
+  <ng-container *ngIf="!authService.isAuthenticated()">
+    <a class="btn btn-outline-primary me-2" routerLink="/auth">
+      <i class="ci-user me-2"></i>Sign In
+    </a>
+  </ng-container>
+  
+
+
+  <div class="navbar-sticky bg-light">
+  <div class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+   
+      <ng-container *ngIf="authService.isAuthenticated()">
+        <!-- User Menu -->
+        <div class="navbar-tool dropdown ms-3">
+          <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown">
+            <i class="navbar-tool-icon ci-user"></i>
+          </a>
+          <div class="navbar-tool-text ms-n3">
+            <small>Welcome</small>{{ currentUser?.name || 'User' }}
+          </div>
+          <div class="dropdown-menu dropdown-menu-end">
+              <a class="dropdown-item" routerLink="/admin/seller">
+              <i class="ci-bag me-2"></i>My Dashboard
+            </a>
+            <a class="dropdown-item" routerLink="/account/profile">
+              <i class="ci-user me-2"></i>My Profile
+            </a>
+          
+
+             <a class="dropdown-item" routerLink="/account/orders">
+              <i class="ci-bag me-2"></i>My Orders
+            </a>
+            <a class="dropdown-item" routerLink="/account/wishlist">
+              <i class="ci-heart me-2"></i>Wishlist
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="javascript:void(0);" (click)="logout()">
+              <i class="ci-sign-out me-2"></i>Sign Out
+            </a>
+          </div>
+        </div>
+
+        <!-- Wishlist -->
+        <a class="navbar-tool d-none d-lg-flex ms-3" routerLink="/account/wishlist">
+          <span class="navbar-tool-tooltip" style="border:1px solid rgb(2, 148, 238)">Wishlist</span>
+          <div class="navbar-tool-icon-box">
+            <i class="navbar-tool-icon ci-heart"></i>
+          </div>
+        </a>
+
+        <!-- Cart -->
+        <div class="navbar-tool dropdown ms-3">
+          <a class="navbar-tool-icon-box bg-secondary dropdown-toggle" routerLink="/shop/cart">
+            <span class="navbar-tool-label">{{cartDatas.length}}</span>
+            <i class="navbar-tool-icon ci-cart"></i>
+          </a>
+          <a class="navbar-tool-text price" routerLink="/shop/cart">
+            <small>My Cart</small>TZS {{calculatetotal(subTotal)}}
+          </a>
+          <div class="dropdown-menu dropdown-menu-end">
+            <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
+              <div style="height: 15rem; overflow-x: hidden;" data-simplebar data-simplebar-auto-hide="false">
+                <div class="widget-cart-item pb-2 border-bottom" *ngFor="let data of cartDatas; let i = index">
+                  <button class="btn-close text-danger" type="button" aria-label="Remove" (click)="remove(i)">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <div class="d-flex align-items-center">
+                    <a class="flex-shrink-0" [routerLink]="['/product', data.id]">
+                      <img [src]="data.image" width="64" alt="Product">
+                    </a>
+                    <div class="ps-2">
+                      <h6 class="widget-product-title">
+                        <a [routerLink]="['/product', data.id]">{{data.name}}</a>
+                      </h6>
+                      <div class="widget-product-meta">
+                        <span class="text-accent me-2">TZS {{data.price | number:'1.0-0'}}</span>
+                        <span class="text-muted">x {{data.quantity}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div> 
+</header>
+

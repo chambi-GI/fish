@@ -1,0 +1,129 @@
+footer {
+  background: #f8f9fa;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2rem;
+
+  .col {
+    flex: 1;
+    min-width: 250px;
+
+    .footer-brand {
+      display: block;
+      margin-bottom: 1.5rem;
+
+      .footer-brand-name {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+      }
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+      a {
+        color: #666;
+        text-decoration: none;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #007bff;
+        }
+      }
+    }
+
+    h4 {
+      color: #333;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    input {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid #e0e0e0;
+      font-size: 1rem;
+      background: #fff;
+      margin-right: 0.5rem;
+    }
+
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: #0056b3;
+      }
+    }
+  }
+
+  .footer-bottom {
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    color: #666;
+  }
+}
+
+.btn-scroll-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+
+  &:hover {
+    background: #0056b3;
+    color: #fff;
+  }
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .btn-scroll-top-tooltip {
+    position: absolute;
+    right: 100%;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 768px) {
+  footer {
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+
+    .col {
+      min-width: 100%;
+    }
+  }
+
+  .btn-scroll-top {
+    bottom: 1rem;
+    right: 1rem;
+  }
+} 

@@ -1,0 +1,132 @@
+<div class="buyer-dashboard">
+  <app-header></app-header>
+  <div class="container mt-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent p-0 mb-2">
+        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  
+  <div class="container">
+    <h1 class="dashboard-title">Dashboard</h1>
+  </div>
+
+
+  <div class="container mb-4">
+    <div class="row g-4 align-items-stretch">
+      <div class="col-lg-3 col-md-6">
+        <div class="card welcome-card h-100">
+          <div class="card-body d-flex flex-column align-items-center justify-content-center">
+            <img [src]="user.avatar" alt="User Avatar" class="avatar mb-2">
+            <div class="fw-bold">{{user.name}}</div>
+            <div class="text-muted small">{{user.email}}</div>
+            <span class="badge bg-primary mt-2">{{user.role}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-6">
+        <div class="row g-3">
+          <div class="col-md-3 col-6">
+            <div class="card stat-card h-100">
+              <div class="card-body">
+                <div class="stat-label">Total Orders</div>
+                <div class="stat-value">{{stats.totalOrders}}</div>
+                <div class="stat-trend text-success small">+2 this month</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="card stat-card h-100">
+              <div class="card-body">
+                <div class="stat-label">Wishlist</div>
+                <div class="stat-value">{{stats.wishlist}}</div>
+                <div class="stat-trend text-info small">1 new</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="card stat-card h-100">
+              <div class="card-body">
+                <div class="stat-label">Pending Payments</div>
+                <div class="stat-value">{{stats.pendingPayments}}</div>
+                <div class="stat-trend text-warning small">Action needed</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-6">
+            <div class="card stat-card h-100">
+              <div class="card-body">
+                <div class="stat-label">Delivered</div>
+                <div class="stat-value">{{stats.delivered}}</div>
+                <div class="stat-trend text-success small">+1 this week</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="container mb-4">
+    <div class="quick-actions card p-3">
+      <div class="d-flex flex-wrap justify-content-center gap-4">
+        <button class="action-btn" (click)="goToOrders()">
+          <i class="ci-cart"></i>
+          My Orders
+        </button>
+        <button class="action-btn" (click)="goToWishlist()">
+          <i class="ci-heart"></i>
+          Wishlist
+        </button>
+        <button class="action-btn" (click)="goToPayments()">
+          <i class="ci-wallet"></i>
+          Payments
+        </button>
+        <button class="action-btn" (click)="goToProfile()">
+          <i class="ci-user"></i>
+          Profile
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Filters -->
+  <div class="container mb-4">
+    <div class="filter-chips d-flex flex-wrap gap-2">
+      <button class="chip" [class.active]="filterStatus === 'All'" (click)="setFilter('All')">All</button>
+      <button class="chip" [class.active]="filterStatus === 'Pending'" (click)="setFilter('Pending')">Pending</button>
+      <button class="chip" [class.active]="filterStatus === 'Delivered'" (click)="setFilter('Delivered')">Delivered</button>
+      <button class="chip" [class.active]="filterStatus === 'Cancelled'" (click)="setFilter('Cancelled')">Cancelled</button>
+      <button class="chip" [class.active]="filterStatus === 'Special Offers'" (click)="setFilter('Special Offers')">Special Offers</button>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="container mb-5">
+    <h2 class="section-title mb-3">Recent Orders</h2>
+    <div class="row g-4">
+      <div class="col-md-4 col-lg-3" *ngFor="let order of recentOrders">
+        <div class="card order-card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="fw-bold">Order #{{order.orderNumber || order.id}}</div>
+            </div>
+            <div class="mb-1 fw-bold">TZS {{order.total | number:'1.0-0'}}</div>
+            <div class="mb-2">
+              <span class="badge bg-success" *ngIf="order.status?.toLowerCase() === 'delivered'">Delivered</span>
+              <span class="badge bg-warning text-dark" *ngIf="order.status?.toLowerCase() === 'pending'">Pending</span>
+              <span class="badge bg-danger" *ngIf="order.status?.toLowerCase() === 'cancelled'">Cancelled</span>
+            </div>
+            <a href="#" class="view-details">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div> 

@@ -1,0 +1,113 @@
+{
+  "MENUITEMS": {
+    "SHOP": {
+      "TEXT": "Shop",
+      "LIST": {
+        "Shoplayouts":"Shop layouts",
+        "ShopGridLeftSidebar":"Shop Grid - Left Sidebar",
+        "ShopGridRightSidebar":"Shop Grid - Right Sidebar",
+        "ShopGridFiltersonTop":"Shop Grid - Filters on Top",
+        "ShopListLeftSidebar":"Shop List - Left Sidebar",
+        "ShopListRightSidebar":"Shop List - Right Sidebar",
+        "ShopListFiltersonTop":"Shop List - Filters on Top",
+        "Marketplace":"Marketplace",
+        "SingleItemPage":"Single Item Page",
+        "VendorPage":"Vendor Page",
+        "Cart":"Cart",
+        "Checkout":"Checkout",
+        "Grocerystore":"Grocery store",
+        "ProductCatalog":"Product Catalog",
+        "SingleProductPage":"Single Product Page",
+        "FoodDelivery":"Food Delivery",
+        "CategoryPage":"Category Page",
+        "SingleItem":"Single Item (Restaurant)",
+        "NFTMarketplace":"NFT Marketplace",
+        "Catalogv1":"Catalog v.1",
+        "Catalogv2":"Catalog v.2",
+        "SingleItemAuctionLive":"Single Item - Auction Live",
+        "SingleItemAuctionEnded":"Single Item - Auction Ended",
+        "SingleItemBuyNow":"Single Item - Buy Now",
+        "ConnectWallet":"Connect Wallet",
+        "CreateNewItem":"Create New Item",
+        "Shoppages":"Shop pages",
+        "ShopCategories":"Shop Categories",
+        "ProductPagev1":"Product Page v.1",
+        "ProductPagev2":"Product Page v.2",
+        "CheckoutDetails":"Checkout - Details",
+        "CheckoutShipping":"Checkout - Shipping",
+        "CheckoutPayment":"Checkout - Payment",
+        "CheckoutReview":"Checkout - Review",
+        "CheckoutComplete":"Checkout - Complete",
+        "OrderTracking":"Order Tracking",
+        "ProductComparison":"Product Comparison"
+      }
+    },
+    "ACCOUNT": {
+      "TEXT": "Account",
+      "LIST": {
+        "ShopUserAccount":"Shop User Account",
+        "OrdersHistory":"Orders History",
+        "ProfileSettings":"Profile Settings",
+        "AccountAddresses":"Account Addresses",
+        "PaymentMethods":"Payment Methods",
+        "Wishlist":"Wishlist",
+        "MyTickets":"My Tickets",
+        "SingleTicket":"Single Ticket",
+        "VendorDashboard":"Vendor Dashboard",
+        "Settings":"Settings",
+        "Purchases":"Purchases",
+        "Favorites":"Favorites",
+        "Sales":"Sales",
+        "Products":"Products",
+        "AddNewProduct":"Add New Product",
+        "Payouts":"Payouts",
+        "NFTMarketplace":"NFT Marketplace",
+        "WalletPayouts":"Wallet & Payouts",
+        "MyItems":"My Items",
+        "MyCollections":"My Collections",
+        "Notifications":"Notifications",
+        "SignIn":"Sign In / Sign Up",
+        "PasswordRecovery":"Password Recovery"
+      }
+    },
+    "PAGES": {
+      "TEXT": "Pages",
+      "LIST": {
+       "NavbarVariants":"Navbar Variants",
+       "1LevelLight":"1 Level Light",
+       "1LevelDark":"1 Level Dark",
+       "2LevelLight":"2 Level Light",
+       "2LevelDark":"2 Level Dark",
+       "3LevelLight":"3 Level Light",
+       "3LevelDark":"3 Level Dark",
+       "ElectronicsStore":"Electronics Store",
+       "Marketplace":"Marketplace",
+       "SideMenu":"Side Menu (Grocery)",
+       "AboutUs":"About Us",
+       "Contacts":"Contacts",
+       "HelpCenter":"Help Center",
+       "HelpTopics":"Help Topics",
+       "SingleTopic":"Single Topic",
+       "SubmitRequest":"Submit a Request",
+       "404NotFound":"404 Not Found",
+       "404SimpleText":"404 - Simple Text",
+       "404Illustration":"404 - Illustration",
+       "StickyFooterDemo":"Sticky Footer Demo"
+      }
+    },
+    "BLOGS": {
+      "TEXT": "Blog",
+      "LIST": {
+        "BlogListLayouts":"Blog List Layouts",
+        "ListwithSidebar":"List with Sidebar",
+        "ListnoSidebar":"List no Sidebar",
+        "BlogGridLayouts":"Blog Grid Layouts",
+        "GridwithSidebar":"Grid with Sidebar",
+        "GridnoSidebar":"Grid no Sidebar",
+        "SinglePostLayouts":"Single Post Layouts",
+        "ArticlewithSidebar":"Article with Sidebar",
+        "ArticlenoSidebar":"Article no Sidebar"
+      }
+    }
+  }
+}

@@ -1,0 +1,114 @@
+<app-seller-header></app-seller-header>
+<app-seller-sidebar></app-seller-sidebar>
+
+<div class="container">
+  <div class="add-product-wrapper">
+    <div class="page-header">
+      <h1>Add New Product</h1>
+      <p class="text-muted">Fill in the details below to add a new product to your inventory</p>
+    </div>
+
+
+    <form [formGroup]="productForm" (ngSubmit)="submit()" class="product-form">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="name">Product Name *</label>
+          <input id="name" type="text" formControlName="name" class="form-control" placeholder="Enter product name" />
+          <div class="error-message"
+            *ngIf="productForm.get('name')?.touched && productForm.get('name')?.errors?.['required']">
+            Product name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="unitPrice">Unit Price (TZS) *</label>
+          <input id="unitPrice" type="number" formControlName="unitPrice" class="form-control"
+            placeholder="Enter price per unit" />
+          <div class="error-message"
+            *ngIf="productForm.get('unitPrice')?.touched && productForm.get('unitPrice')?.errors?.['required']">
+            Unit price is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="availableQuantity">Available Quantity *</label>
+          <input id="availableQuantity" type="number" formControlName="availableQuantity" class="form-control"
+            placeholder="Enter available quantity" />
+          <div class="error-message"
+            *ngIf="productForm.get('availableQuantity')?.touched && productForm.get('availableQuantity')?.errors?.['required']">
+            Available quantity is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="categoryId">Category *</label>
+          <select id="categoryId" formControlName="categoryId" class="form-control">
+            <option value="">Select a category</option>
+            <option value="clz1234abcd">Fresh Fish</option>
+            <option value="frozen-fish">Frozen Fish</option>
+            <option value="shellfish">Shellfish</option>
+            <option value="seafood">Seafood</option>
+          </select>
+          <div class="error-message"
+            *ngIf="productForm.get('categoryId')?.touched && productForm.get('categoryId')?.errors?.['required']">
+            Category is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="storageType">Storage Type *</label>
+          <select id="storageType" formControlName="storageType" class="form-control">
+            <option value="">Select storage type</option>
+            <option value="frozen">Frozen</option>
+            <option value="fresh">Fresh</option>
+            <option value="chilled">Chilled</option>
+          </select>
+          <div class="error-message"
+            *ngIf="productForm.get('storageType')?.touched && productForm.get('storageType')?.errors?.['required']">
+            Storage type is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="alertQuantity">Alert Quantity</label>
+          <input id="alertQuantity" type="number" formControlName="alertQuantity" class="form-control"
+            placeholder="Enter alert quantity" />
+          <small class="text-muted">Get notified when stock reaches this level</small>
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" class="form-control" rows="4"
+          placeholder="Enter product description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="imageUpload">Upload Images</label>
+        <input type="file" id="imageUpload" (change)="onFileSelected($event)" multiple accept="image/*"
+          class="form-control" />
+      </div>
+
+      <!-- Image Preview -->
+      <div class="image-previews mt-3">
+        <div *ngFor="let img of previewUrls" class="preview-image mb-2">
+          <img [src]="img" alt="Preview" width="150" />
+        </div>
+      </div>
+
+
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" routerLink="/admin/seller/dashboard">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading || productForm.invalid">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ isLoading ? 'Adding Product...' : 'Add Product' }}
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<app-footer></app-footer>

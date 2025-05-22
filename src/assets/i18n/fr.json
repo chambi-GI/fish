@@ -1,0 +1,113 @@
+{
+  "MENUITEMS": {
+    "SHOP": {
+      "TEXT": "Boutique",
+      "LIST": {
+        "Shoplayouts":"Aménagements de magasin",
+        "ShopGridLeftSidebar":"Shop Grid - Barre latérale gauche",
+        "ShopGridRightSidebar":"Shop Grid - Barre latérale droite",
+        "ShopGridFiltersonTop":"Shop Grid - Filtres en haut",
+        "ShopListLeftSidebar":"Liste de boutiques - Barre latérale gauche",
+        "ShopListRightSidebar":"Liste de boutiques - Barre latérale droite",
+        "ShopListFiltersonTop":"Liste de boutiques - Filtres en haut",
+        "Marketplace":"Marché",
+        "SingleItemPage":"Page d'article unique",
+        "VendorPage":"Page du vendeur",
+        "Cart":"Chariot",
+        "Checkout":"Vérifier",
+        "Grocerystore":"Épicerie",
+        "ProductCatalog":"Catalogue des produits",
+        "SingleProductPage":"Page de produit unique",
+        "FoodDelivery":"Livraison de nourriture",
+        "CategoryPage":"Page de catégorie",
+        "SingleItem":"Article unique (restaurant)",
+        "NFTMarketplace":"Marché NFT",
+        "Catalogv1":"Catalogue v.1",
+        "Catalogv2":"Catalogue v.2",
+        "SingleItemAuctionLive":"Article unique - Enchère en direct",
+        "SingleItemAuctionEnded":"Article unique - Enchère terminée",
+        "SingleItemBuyNow":"Article unique - Acheter maintenant",
+        "ConnectWallet":"Connecter le portefeuille",
+        "CreateNewItem":"Créer un nouvel élément",
+        "Shoppages":"Pages de la boutique",
+        "ShopCategories":"Catégories de la boutique",
+        "ProductPagev1":"Page produit v.1",
+        "ProductPagev2":"Page produit v.2",
+        "CheckoutDetails":"Paiement - Détails",
+        "CheckoutShipping":"Paiement - Expédition",
+        "CheckoutPayment":"Caisse - Paiement",
+        "CheckoutReview":"Paiement - Révision",
+        "CheckoutComplete":"Paiement - Terminé",
+        "OrderTracking":"Suivi de commande",
+        "ProductComparison":"Comparaison de produits"
+      }
+    },
+    "ACCOUNT": {
+      "TEXT": "Compte",
+      "LIST": {
+        "ShopUserAccount":"Compte utilisateur de la boutique",
+        "OrdersHistory":"Historique des commandes",
+        "ProfileSettings":"Paramètres de profil",
+        "AccountAddresses":"Adresses de compte",
+        "PaymentMethods":"méthodes de payement",
+        "Wishlist":"Liste de souhaits",
+        "MyTickets":"Mes billets",
+        "SingleTicket":"Un seul billet",
+        "VendorDashboard":"Tableau de bord du fournisseur",
+        "Settings":"Réglages",
+        "Purchases":"Achats",
+        "Favorites":"Favoris",
+        "Sales":"Ventes",
+        "Products":"Des produits",
+        "AddNewProduct":"Ajouter un nouveau produit",
+        "Payouts":"Paiements",
+        "NFTMarketplace":"Marché NFT",
+        "WalletPayouts":"Portefeuille et paiements",
+        "MyItems":"Mes articles",
+        "MyCollections":"Mes collections",
+        "Notifications":"Avis",
+        "SignIn":"Vous connecter vous inscrire",
+        "PasswordRecovery":"Récupération de mot de passe"
+      }
+    },
+    "PAGES": {
+      "TEXT": "pages",
+      "LIST": {
+       "NavbarVariants":"Variantes de la barre de navigation",
+       "1LevelLight":"Lumière à 1 niveau",
+       "1LevelDark":"1 niveau sombre",
+       "2LevelLight":"Lumière à 2 niveaux",
+       "2LevelDark":"2 niveaux sombres",
+       "3LevelLight":"Lumière à 3 niveaux",
+       "3LevelDark":"3 niveaux d'obscurité",
+       "ElectronicsStore":"Magasin d'électronique",
+       "Marketplace":"Marché",
+       "SideMenu":"Menu latéral (Épicerie)",
+       "AboutUs":"À propos de nous",
+       "Contacts":"Contacts",
+       "HelpCenter":"Centre d'aide",
+       "HelpTopics":"Sujets d'aide",
+       "SingleTopic":"Sujet unique",
+       "SubmitRequest":"Soumettre une demande",
+       "404NotFound":"404 Non trouvé",
+       "404SimpleText":"404 - Texte simple",
+       "404Illustration":"404 - Illustration",
+       "StickyFooterDemo":"Démo de pied de page collant"
+      }
+    },
+    "BLOGS": {
+      "TEXT": "Blog",
+      "LIST": {
+        "BlogListLayouts":"Dispositions de la liste de blogs",
+        "ListwithSidebar":"Liste avec barre latérale",
+        "ListnoSidebar":"Ne lister aucune barre latérale",
+        "BlogGridLayouts":"Dispositions de la grille de blog",
+        "GridwithSidebar":"Grille avec barre latérale",
+        "GridnoSidebar":"Grille sans barre latérale",
+        "SinglePostLayouts":"Dispositions de poste unique",
+        "ArticlewithSidebar":"Article avec encadré",
+        "ArticlenoSidebar":"Article no Sidebar"
+      }
+    }
+  }
+}

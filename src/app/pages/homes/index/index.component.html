@@ -1,0 +1,295 @@
+<app-header></app-header>
+<section class="hero-carousel position-relative">
+  <div class="hero-overlay"></div>
+  <ngx-slick-carousel [config]="Coverflow" class="swiper-container">
+    <ng-container *ngFor="let product of productList">
+      <div class="swiper-slide" ngxSlickItem style="border-radius: 12em;">
+        <div class="hero-slide position-relative">
+          <div class="hero-background"
+            [style.background-image]="'url(' + (product?.images?.[0]?.url || 'assets/img/placeholder.jpg') + ')'"></div>
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-6">
+                <div class="hero-content text-white rounded-3 bg-dark bg-opacity-50 backdrop-blur">
+                  <span class="badge bg-primary mb-2">Featured</span>
+                  <h2 class="text-gradient mb-2">{{ product?.name }}</h2>
+                  <p class="mb-2">{{ product?.description }}</p>
+                  <div class="d-flex gap-2">
+                    <a class="btn btn-primary btn-sm px-3" [routerLink]="['/product', product.id]">
+                      Shop Now <i class="ci-arrow-right ms-1"></i>
+                    </a>
+                    <button class="btn btn-outline-light btn-sm px-3" (click)="centerModal(centerDataModal, product)">
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 d-none d-lg-block">
+                <div class="hero-image-wrapper">
+                  <img class="img-fluid rounded-3 shadow"
+                    [src]="product?.images?.[0]?.url || 'assets/img/placeholder.jpg'"
+                    [alt]="product?.name || 'Product image'">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ngx-slick-carousel>
+
+  <!-- Custom Navigation -->
+  <div
+    class="carousel-controls position-absolute w-100 top-50 translate-middle-y d-none d-lg-flex justify-content-between px-2">
+    <button class="btn btn-light btn-circle" (click)="prevSlide()">
+      <i class="ci-arrow-left"></i>
+    </button>
+    <button class="btn btn-light btn-circle" (click)="nextSlide()">
+      <i class="ci-arrow-right"></i>
+    </button>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories-section py-4">
+  <div class="container">
+    <div class="section-header text-center mb-4">
+      <h2 class="section-title">Browse Categories</h2>
+    </div>
+
+    <!-- Category Buttons -->
+    <div class="category-buttons text-center mb-4">
+      <button class="category-btn" [class.active]="selectedCategory === 'all'" (click)="filterByCategory('all')">
+        <i class="ci-fish me-2"></i>
+        All Categories
+      </button>
+      <ng-container *ngFor="let category of categoryList">
+        <button class="category-btn" [class.active]="selectedCategory === category.id"
+          (click)="filterByCategory(category.id)">
+          <i class="ci-fish me-2"></i>
+          {{category.name}}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</section>
+
+<!-- Search Section -->
+<section class="search-section py-4 bg-light">
+  <div class="container">
+    <div class="search-wrapper">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="search-input-group">
+            <input type="text" class="form-control form-control-lg" placeholder="Search products..."
+              [(ngModel)]="searchQuery" (keyup.enter)="searchProducts()">
+            <button class="btn btn-primary" (click)="searchProducts()">
+              <i class="ci-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex gap-3">
+            <div class="flex-grow-1">
+              <select class="form-select" [(ngModel)]="priceRange" (change)="searchProducts()">
+                <option value="">Price Range</option>
+                <option value="0-10000">Under TZS 10,000</option>
+                <option value="10000-50000">TZS 10,000 - 50,000</option>
+                <option value="50000-100000">TZS 50,000 - 100,000</option>
+                <option value="100000+">Over TZS 100,000</option>
+              </select>
+            </div>
+            <div class="flex-grow-1">
+              <select class="form-select" [(ngModel)]="sortBy" (change)="searchProducts()">
+                <option value="relevance">Sort by: Relevance</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+                <option value="newest">Newest First</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="cart-summary" *ngIf="cartItems.length > 0">
+  <div class="container">
+    <div class="cart-summary-content">
+      <div class="d-flex align-items-center">
+        <i class="ci-cart me-2"></i>
+        <span class="cart-count">{{ getCartItemCount() }} items</span>
+        <span class="cart-total ms-3">Total: TZS {{ totalCartAmount | number:'1.0-0' }}</span>
+      </div>
+      <button class="btn btn-primary" routerLink="/checkout">
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<section class="products-section py-5 bg-light">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">
+        {{ selectedCategory === 'all' ? 'All Products' : 'Products in ' + (categoryList |
+        categoryFilter:selectedCategory)?.name }}
+      </h2>
+    </div>
+
+    <div class="row g-4">
+      <ng-container *ngFor="let product of pagedProducts">
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="product-card card h-100 shadow-sm">
+            <div class="product-image-wrapper">
+              <img class="card-img-top product-image" [src]="product.images[0].url || 'assets/img/placeholder.jpg'"
+                [alt]="product.name">
+              <div class="product-overlay">
+                <button class="btn btn-light btn-sm" (click)="centerModal(centerDataModal, product)">
+                  Quick View
+                </button>
+              </div>
+              <div class="product-badges">
+                <span class="badge bg-danger" *ngIf="!product.isAvailable">Out of Stock</span>
+                <span class="badge bg-success" *ngIf="(product.stock ?? 0) <= 5 && product.isAvailable">Low Stock</span>
+                <span class="badge bg-info" *ngIf="isNewProduct(product)">New</span>
+              </div>
+            </div>
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <div class="rating mb-2">
+                <ngb-rating [rate]="product.rating ?? 0" [readonly]="true" [max]="5" class="text-warning"></ngb-rating>
+                <small class="text-muted ms-2">({{ product.review }})</small>
+              </div>
+              <p class="card-text text-primary fw-bold">TZS {{ product.unitPrice | number:'1.0-0' }}</p>
+              <div class="d-flex gap-2" *ngIf="product.isAvailable">
+                <div class="quantity-control" *ngIf="isInCart(product.id)">
+                  <button class="btn btn-outline-primary btn-sm"
+                    (click)="updateCartItemQuantity(product.id, getCartItemQuantity(product.id) - 1)">
+                    <i class="ci-minus"></i>
+                  </button>
+                  <span class="mx-2">{{ getCartItemQuantity(product.id) }}</span>
+                  <button class="btn btn-outline-primary btn-sm"
+                    (click)="updateCartItemQuantity(product.id, getCartItemQuantity(product.id) + 1)"
+                    [disabled]="getCartItemQuantity(product.id) >= (product.stock ?? 0)">
+                    <i class="ci-plus"></i>
+                  </button>
+                </div>
+                <button class="btn btn-success flex-grow-1" (click)="addToCart(product)" *ngIf="!isInCart(product.id)">
+                  Add to Cart
+                </button>
+              </div>
+              <button class="btn btn-secondary w-100" disabled *ngIf="!product.isAvailable">
+                Out of Stock
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- No Products Message -->
+    <div class="text-center mt-4" *ngIf="pagedProducts.length === 0">
+      <div class="no-results">
+        <i class="ci-box mb-3"></i>
+        <h4>No products found</h4>
+        <p class="text-muted">No products available in this category.</p>
+      </div>
+    </div>
+
+
+    <div class="d-flex justify-content-center align-items-center mt-5" *ngIf="pagedProducts.length > 0">
+      <button class="btn btn-outline-primary me-3" (click)="prevPage()" [disabled]="currentPage === 1">
+        <i class="ci-arrow-left me-2"></i>Previous
+      </button>
+      <span class="mx-3">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button class="btn btn-outline-primary ms-3" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next<i class="ci-arrow-right ms-2"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<ng-template #centerDataModal let-modal>
+  <div class="modal-header border-bottom-0">
+    <h4 class="modal-title">{{singleData.name}}</h4>
+    <button class="btn-close" type="button" (click)="modal.dismiss('Cross click')" aria-label="Close">
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-4">
+      <!-- Product Gallery -->
+      <div class="col-lg-7">
+        <div class="product-gallery">
+          <div class="product-gallery-preview mb-3">
+            <img class="img-fluid rounded" [src]="product_img" [alt]="singleData.name">
+          </div>
+          <div class="product-gallery-thumbs d-flex gap-2">
+            <ng-container *ngFor="let image of singleData.images; let i = index">
+              <a class="gallery-thumb" href="javascript:void(0);" (click)="filterImg(i)">
+                <img class="img-thumbnail" [src]="image.url" [alt]="'Product thumbnail ' + (i + 1)">
+              </a>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Details -->
+      <div class="col-lg-5">
+        <div class="product-details">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="rating">
+              <ngb-rating [rate]="singleData.rating ?? 0" [readonly]="true" [max]="5" class="text-warning"></ngb-rating>
+              <span class="ms-2 text-muted">{{singleData.review}} Reviews</span>
+            </div>
+            <button class="btn btn-outline-danger" ngbTooltip="Add to wishlist">
+              <i class="ci-heart"></i>
+            </button>
+          </div>
+
+          <h3 class="mb-3">{{singleData.name}}</h3>
+          <p class="text-muted mb-4">{{singleData.description}}</p>
+
+          <div class="d-flex align-items-center mb-4">
+            <h4 class="text-primary mb-0 me-3">TZS {{singleData.unitPrice | number:'1.0-0'}}</h4>
+            <span class="badge bg-success" *ngIf="singleData.isAvailable">In Stock</span>
+            <span class="badge bg-danger" *ngIf="!singleData.isAvailable">Out of Stock</span>
+          </div>
+
+          <div class="d-flex gap-3 mb-4" *ngIf="singleData.isAvailable">
+            <div class="quantity-control" *ngIf="isInCart(singleData.id)">
+              <button class="btn btn-outline-primary"
+                (click)="updateCartItemQuantity(singleData.id, getCartItemQuantity(singleData.id) - 1)">
+                <i class="ci-minus"></i>
+              </button>
+              <span class="mx-3">{{ getCartItemQuantity(singleData.id) }}</span>
+              <button class="btn btn-outline-primary"
+                (click)="updateCartItemQuantity(singleData.id, getCartItemQuantity(singleData.id) + 1)">
+                <i class="ci-plus"></i>
+              </button>
+            </div>
+            <button class="btn btn-success flex-grow-1" (click)="addToCart(singleData)"
+              *ngIf="!isInCart(singleData.id)">
+              Add to Cart
+            </button>
+          </div>
+
+          <div class="product-meta">
+            <p class="mb-2"><strong>Category:</strong> {{(categoryList | categoryFilter:singleData.categoryId)?.name}}
+            </p>
+            <p class="mb-2"><strong>Stock:</strong> {{singleData.stock}} units</p>
+            <p class="mb-0"><strong>Last Updated:</strong> {{singleData.updatedAt | date:'medium'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-footer></app-footer>

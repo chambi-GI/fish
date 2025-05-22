@@ -1,0 +1,166 @@
+* {
+    box-sizing: border-box;
+  }
+
+
+  .main-container{
+    margin: 0;
+    padding:0.3em;
+    font-family: 'Inter', sans-serif;
+    background: #f1f1f1;
+  }
+
+  .container {
+    display: flex;
+    height: 80vh;
+    background: #f5f7fa;
+    padding:0.2rem;
+  }
+
+  .left {
+    flex: 1;
+    background: #fff;
+    padding: 40px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .left .logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #3dbff2;
+    margin-bottom: 40px;
+  }
+
+  .left h2 {
+    margin: 0 0 10px;
+    font-size: 28px;
+  }
+
+  .left p {
+    color: #555;
+    margin-bottom: 30px;
+  }
+
+  .toggle-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .toggle-buttons button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+
+
+
+.buyer-container{
+    margin-top: 1rem;
+    border-color: #3dbff2;
+    padding:2em;
+    border:#3dbff2 0.02em solid;
+    border-radius: 1em;
+}
+
+  .toggle-buttons button:focus {
+    background: #f0f0f0;
+    border-color: #3dbff2;
+  }
+
+  label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .phone-input {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+
+  .phone-input select {
+    border: none;
+    padding: 10px;
+    background: #f9f9f9;
+  }
+
+  .phone-input input {
+    border: none;
+    padding: 10px;
+    flex: 1;
+    outline: none;
+  }
+
+  .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .options label {
+    display: flex;
+    align-items: center;
+  }
+
+  .options input {
+    margin-right: 6px;
+  }
+
+  .options a {
+    text-decoration: none;
+    color: #0077cc;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px;
+    background: #3dbff2;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .signup {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .signup a {
+    color: #0077cc;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .right {
+    flex: 1;
+    background: url('../../../../../assets/img/seller.png') no-repeat center center;
+    background-size: cover;
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+    .right {
+      height: 300px;
+      border-radius: 0;
+    }
+  }

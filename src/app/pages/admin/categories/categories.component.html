@@ -1,0 +1,209 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Product Categories</h5>
+          <button class="btn btn-primary" (click)="openModal(categoryModal)">
+            <i class="ci-add me-2"></i>Add Category
+          </button>
+        </div>
+        <div class="card-body">
+          <!-- Loading Spinner -->
+          <div class="text-center py-4" *ngIf="loading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <!-- Categories Table -->
+          <div class="table-responsive" *ngIf="!loading">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                  <th>Created At</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let category of categories">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <img *ngIf="category.image" [src]="category.image" 
+                           class="rounded-circle me-2" width="40" height="40" 
+                           [alt]="category.name">
+                      <span>{{category.name}}</span>
+                    </div>
+                  </td>
+                  <td>{{category.description || 'No description'}}</td>
+                  <td>
+                    <span class="badge" [ngClass]="category.isActive ? 'bg-success' : 'bg-danger'">
+                      {{category.isActive ? 'Active' : 'Inactive'}}
+                    </span>
+                  </td>
+                  <td>{{category.createdAt | date:'medium'}}</td>
+                  <td>
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-outline-primary" 
+                              (click)="openModal(categoryModal, category)">
+                        <i class="ci-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger" 
+                              (click)="deleteCategory(category.id)">
+                        <i class="ci-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="categories.length === 0">
+                  <td colspan="5" class="text-center py-4">
+                    <div class="text-muted">
+                      <i class="ci-folder me-2"></i>No categories found
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Category Modal -->
+<ng-template #categoryModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{isEditing ? 'Edit' : 'Add'}} Category</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label class="form-label" for="name">Name</label>
+        <input type="text" class="form-control" id="name" formControlName="name"
+               [ngClass]="{'is-invalid': f['name'].touched && f['name'].errors}">
+        <div class="invalid-feedback" *ngIf="f['name'].touched && f['name'].errors?.['required']">
+          Name is required
+        </div>
+        <div class="invalid-feedback" *ngIf="f['name'].touched && f['name'].errors?.['minlength']">
+          Name must be at least 3 characters
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="image">Image URL</label>
+        <input type="url" class="form-control" id="image" formControlName="image">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="parentId">Parent Category</label>
+        <select class="form-select" id="parentId" formControlName="parentId">
+          <option value="">None</option>
+          <option *ngFor="let cat of categories" [value]="cat.id">
+            {{cat.name}}
+          </option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="isActive" formControlName="isActive">
+          <label class="form-check-label" for="isActive">Active</label>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <button type="button" class="btn btn-secondary me-2" (click)="modal.dismiss()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid || loading">
+          <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+          {{isEditing ? 'Update' : 'Create'}}
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Add New Category Modal -->
+<div class="modal-overlay" *ngIf="showAddCategoryModal">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <form [formGroup]="categoryForm" (ngSubmit)="submitCategory()" class="category-form">
+      <div class="modal-header">
+        <div class="icon-circle bg-success mb-2"><i class="ci-check text-white"></i></div>
+        <h2 class="mb-0">Add new category</h2>
+        <button class="close-button" type="button" (click)="closeCategoryModal()">
+          <i class="ci ci-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="mb-3">Product images</h5>
+        <div class="product-images-grid">
+          <div class="main-image-upload">
+            <label class="image-upload-label" [class.drag-over]="dragOverIndex === 0"
+              (dragover)="onDragOver($event, 0)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event, 0)">
+              <input type="file" (change)="onImageUpload($event, 0)" hidden>
+              <div class="image-upload-box">
+                <ng-container *ngIf="imageUrls.controls[0].value; else uploadIcon">
+                  <img [src]="imageUrls.controls[0].value" alt="Main" />
+                  <button type="button" class="btn btn-danger btn-sm mt-2" (click)="removeImageUrl(0)"><i class="ci ci-trash"></i></button>
+                </ng-container>
+                <ng-template #uploadIcon>
+                  <div class="upload-placeholder">
+                    <i class="ci-upload"></i>
+                    <span>Click to upload<br>or drag and drop<br>SVG, PNG, JPG or GIF (max. 800×400px)</span>
+                  </div>
+                </ng-template>
+                <div *ngIf="imageErrors[0]" class="text-danger small mt-1">{{ imageErrors[0] }}</div>
+                <div *ngIf="imageProgress[0]" class="progress mt-1"><div class="progress-bar" [style.width]="imageProgress[0] + '%'">{{ imageProgress[0] }}%</div></div>
+              </div>
+            </label>
+          </div>
+          <div class="side-images">
+            <ng-container *ngFor="let ctrl of imageUrls.controls.slice(1,5); let i = index">
+              <label class="image-upload-label small" [class.drag-over]="dragOverIndex === i+1"
+                (dragover)="onDragOver($event, i+1)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event, i+1)">
+                <input type="file" (change)="onImageUpload($event, i+1)" hidden>
+                <div class="image-upload-box small">
+                  <ng-container *ngIf="ctrl.value; else uploadIconSmall">
+                    <img [src]="ctrl.value" alt="Side" />
+                    <button type="button" class="btn btn-danger btn-sm mt-2" (click)="removeImageUrl(i+1)"><i class="ci ci-trash"></i></button>
+                  </ng-container>
+                  <ng-template #uploadIconSmall>
+                    <div class="upload-placeholder small">
+                      <i class="ci-upload"></i>
+                      <span>Click to upload<br>or drag and drop<br>SVG, PNG, JPG or GIF (max. 800×400px)</span>
+                    </div>
+                  </ng-template>
+                  <div *ngIf="imageErrors[i+1]" class="text-danger small mt-1">{{ imageErrors[i+1] }}</div>
+                  <div *ngIf="imageProgress[i+1]" class="progress mt-1"><div class="progress-bar" [style.width]="imageProgress[i+1] + '%'">{{ imageProgress[i+1] }}%</div></div>
+                </div>
+              </label>
+            </ng-container>
+          </div>
+        </div>
+        <hr>
+        <h5 class="mb-3">Basic information</h5>
+        <div class="form-group">
+          <label>Product name</label>
+          <input class="form-control" formControlName="name" placeholder="Product name" required />
+        </div>
+        <div class="form-group">
+          <label>Description (Optional)</label>
+          <textarea class="form-control" formControlName="description" placeholder="Description (Optional)"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" (click)="closeCategoryModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading || categoryForm.invalid">Confirm</button>
+      </div>
+    </form>
+  </div>
+</div> 

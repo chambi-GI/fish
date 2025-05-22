@@ -1,0 +1,113 @@
+{
+  "MENUITEMS": {
+    "SHOP": {
+      "TEXT": "Winkel",
+      "LIST": {
+        "Shoplayouts":"Winkelindelingen",
+        "ShopGridLeftSidebar":"Winkelraster - linkerzijbalk",
+        "ShopGridRightSidebar":"Winkelraster - rechterzijbalk",
+        "ShopGridFiltersonTop":"Winkelraster - Filters bovenaan",
+        "ShopListLeftSidebar":"Winkellijst - linkerzijbalk",
+        "ShopListRightSidebar":"Winkellijst - rechterzijbalk",
+        "ShopListFiltersonTop":"Winkellijst - Filters bovenaan",
+        "Marketplace":"Marktplaats",
+        "SingleItemPage":"Enkele itempagina",
+        "VendorPage":"Leverancierspagina",
+        "Cart":"Winkelwagen",
+        "Checkout":"Uitchecken",
+        "Grocerystore":"Supermarkt",
+        "ProductCatalog":"Product catalogus",
+        "SingleProductPage":"Enkele productpagina",
+        "FoodDelivery":"Voedsellevering",
+        "CategoryPage":"Categoriepagina",
+        "SingleItem":"Enkel Artikel (Restaurant)",
+        "NFTMarketplace":"NFT-marktplaats",
+        "Catalogv1":"Catalogus v.1",
+        "Catalogv2":"Catalogus v.2",
+        "SingleItemAuctionLive":"Enkel item - Live veiling",
+        "SingleItemAuctionEnded":"Enkel item - veiling beëindigd",
+        "SingleItemBuyNow":"Los artikel - Nu kopen",
+        "ConnectWallet":"Portemonnee verbinden",
+        "CreateNewItem":"Nieuw item maken",
+        "Shoppages":"Winkelpagina's",
+        "ShopCategories":"Winkelcategorieën",
+        "ProductPagev1":"Productpagina v.1",
+        "ProductPagev2":"Productpagina v.2",
+        "CheckoutDetails":"Afrekenen - Details",
+        "CheckoutShipping":"Afrekenen - Verzending",
+        "CheckoutPayment":"Afrekenen - Betaling",
+        "CheckoutReview":"Afrekenen - Review",
+        "CheckoutComplete":"Afrekenen - Voltooid",
+        "OrderTracking":"Volgen van bestellingen",
+        "ProductComparison":"productvergelijking"
+      }
+    },
+    "ACCOUNT": {
+      "TEXT": "Account",
+      "LIST": {
+        "ShopUserAccount":"Winkel gebruikersaccount",
+        "OrdersHistory":"Bestelgeschiedenis",
+        "ProfileSettings":"Profielinstellingen",
+        "AccountAddresses":"Accountadressen",
+        "PaymentMethods":"Betaalmethodes",
+        "Wishlist":"verlanglijst",
+        "MyTickets":"Mijn Tickets",
+        "SingleTicket":"Een ticket",
+        "VendorDashboard":"Leveranciersdashboard",
+        "Settings":"Instellingen",
+        "Purchases":"Aankopen",
+        "Favorites":"Favorieten",
+        "Sales":"verkoop",
+        "Products":"Producten",
+        "AddNewProduct":"Nieuw product toevoegen",
+        "Payouts":"Uitbetalingen",
+        "NFTMarketplace":"NFT-marktplaats",
+        "WalletPayouts":"Portemonnee en uitbetalingen",
+        "MyItems":"Mijn spullen",
+        "MyCollections":"Mijn collecties",
+        "Notifications":"Meldingen",
+        "SignIn":"Aanmelden / Aanmelden",
+        "PasswordRecovery":"Wachtwoord herstel"
+      }
+    },
+    "PAGES": {
+      "TEXT": "Pagina's",
+      "LIST": {
+       "NavbarVariants":"Navbar-varianten",
+       "1LevelLight":"1 niveau licht",
+       "1LevelDark":"1 niveau donker",
+       "2LevelLight":"2 niveau licht",
+       "2LevelDark":"2 niveaus donker",
+       "3LevelLight":"3 niveau licht",
+       "3LevelDark":"3 niveaus donker",
+       "ElectronicsStore":"Elektronicawinkel",
+       "Marketplace":"Marktplaats",
+       "SideMenu":"Zijmenu (boodschappen)",
+       "AboutUs":"Over ons",
+       "Contacts":"Contacten",
+       "HelpCenter":"Helpcentrum",
+       "HelpTopics":"Hulponderwerpen",
+       "SingleTopic":"Eén onderwerp",
+       "SubmitRequest":"Dien een aanvraag in",
+       "404NotFound":"404 Niet gevonden",
+       "404SimpleText":"404 - Eenvoudige tekst",
+       "404Illustration":"404 - Illustratie",
+       "StickyFooterDemo":"Sticky Footer-demo"
+      }
+    },
+    "BLOGS": {
+      "TEXT": "Blog",
+      "LIST": {
+        "BlogListLayouts":"Indelingen bloglijsten",
+        "ListwithSidebar":"Lijst met zijbalk",
+        "ListnoSidebar":"Lijst geen zijbalk",
+        "BlogGridLayouts":"Blograsterlay-outs",
+        "GridwithSidebar":"Raster met zijbalk",
+        "GridnoSidebar":"Raster geen zijbalk",
+        "SinglePostLayouts":"Lay-outs voor één bericht",
+        "ArticlewithSidebar":"Artikel met zijbalk",
+        "ArticlenoSidebar":"Artikel nr Zijbalk"
+      }
+    }
+  }
+}
